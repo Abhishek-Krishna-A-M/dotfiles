@@ -1,0 +1,50 @@
+/**
+ * Catppuccin Mocha – clean, valid version for Rofi 1.7+
+ */
+
+* {
+    background:  #1e1e2e;
+    foreground:  #cdd6f4;
+    accent:      #89b4fa;
+    border-color:#89b4fa;
+    spacing:     6;
+    font:        "FiraCode Nerd Font 10";
+}
+
+window {
+    background-color: @background;
+    border:           2px solid @border-color;
+    border-radius:    10px;
+    padding:          10px;
+}
+
+mainbox {
+    spacing: 8;
+    margin:  10;
+}
+
+inputbar {
+    background-color: #313244;
+    text-color:       #f5e0dc;
+    border:           1px solid @border-color;
+    padding:          6px;
+    border-radius:    6px;
+}
+
+listview {
+    lines:        10;
+    fixed-height: false;
+    spacing:      4px;
+}
+
+element {
+    background-color: transparent;
+    text-color:       @foreground;
+    padding:          6px;
+    border-radius:    4px;
+}
+
+element selected {
+    background-color: @accent;
+    text-color:       #1e1e2e;
+}
