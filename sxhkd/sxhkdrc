@@ -6,9 +6,13 @@
 super + Return
 	alacritty
 
-# program launcher
-super + d
+#rofi program launcher
+super + r
 	rofi -show drun
+
+#dmenu program launcher
+super + d
+	dmenu_run -f -l 10 -p "run"
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -152,3 +156,11 @@ Print
 # Rofi Power Menu
 super + alt + x
     ~/.config/rofi/powermenu.sh
+
+#Rofi Display Mode
+super + space
+	~/.config/rofi/hdmi.sh
+
+#Wallpaper change
+super + shift + p
+	~/.config/bspwm/scripts/change-wallpaper.sh

@@ -98,10 +98,3 @@ message {
 textbox {
     text-color: @text-color;
 }
-
-scrollbar {
-    handle-color:   @accent;
-    handle-width:   4px;
-    background-color: #313244;
-    border-radius:  2px;
-}
