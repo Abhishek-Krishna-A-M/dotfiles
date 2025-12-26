@@ -34,6 +34,11 @@ key = "C"
 mods = "Control"
 chars = "\u0003"
 
+[[keyboard.bindings]]
+key = "N"
+mods = "Control|Shift"
+action = "SpawnNewInstance"
+
 [selection]
 save_to_clipboard = true
 
