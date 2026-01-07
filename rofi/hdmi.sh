@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-chosen=$(printf "Mirror\nExtend" | \
-rofi -dmenu -i -p "Screen Mode" -config ~/.config/rofi/config.rasi)
+# Path: ~/.config/rofi/scripts/hdmi.sh
+
+chosen=$(printf "Mirror\nExtend" | rofi -dmenu -i -p "Display" \
+    -theme-str 'window {width: 200px;} listview {lines: 2;}')
 
 case "$chosen" in
     Mirror)  ~/.config/bspwm/scripts/mirror.sh ;;
     Extend) ~/.config/bspwm/scripts/extend.sh ;;
 esac
-
