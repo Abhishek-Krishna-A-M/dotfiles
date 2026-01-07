@@ -1,100 +1,33 @@
 /**
- * Catppuccin Mocha – clean, valid version for Rofi 1.7+
+ * Optimized Catppuccin Mocha for Performance
+ * Path: ~/.config/rofi/config.rasi
  */
 
 configuration {
-    modi: "drun,run,window";
-    show-icons: true;
-    icon-theme: "Papirus";
-    display-drun: "󰀻 Apps";
-    display-run: " Run";
-    display-window: "󰖲 Windows";
+    modi: "drun,run,actions:~/.config/rofi/actions.sh";
+    show-icons: false;          /* DISABLE icons for instant loading */
+    display-drun: " ";
+    display-run: " ";
+    display-actions: "󰖟 Search ";
     drun-display-format: "{name}";
-    sidebar-mode: false;
     font: "FiraCode Nerd Font 10";
+    terminal: "alacritty";      /* Change to your terminal */
+    disable-history: false;
+    sort: true;
+    sorting-method: "fzf";      /* Fast fuzzy matching */
 }
 
-* {
-    background-color:   #1e1e2e;
-    text-color:         #cdd6f4;
-    accent:             #89b4fa;
-    border-color:       #89b4fa;
-    spacing:            6;
-}
+@theme "~/.config/rofi/catppuccin.rasi"
 
+/* Overrides for extra speed */
 window {
-    background-color: transparent;
-    border:           2;
-    padding:          20px;
-    width:            600px;
-    border-radius:    12px;
-}
-
-mainbox {
-    children: [inputbar, listview];
-    spacing:  12px;
-}
-
-inputbar {
-    children: [prompt, entry];
-    background-color: #313244;
-    border-radius:    8px;
-    padding:          8px 12px;
-    border:           1px;
-}
-
-prompt {
-    background-color: inherit;
-    text-color:       @accent;
-    padding:          0 8px 0 0;
-}
-
-entry {
-    background-color: inherit;
-    text-color:       #f5e0dc;
-    placeholder:      "Search...";
-    placeholder-color: #6c7086;
+    width: 30%;                /* Smaller window renders faster */
+    border: 2px;
+    border-radius: 0px;        /* Sharp corners are slightly faster to render */
 }
 
 listview {
-    scrollbar:        true;
-    cycle:            true;
-    dynamic:          true;
-    layout:           vertical;
-    lines:            8;
-    fixed-height:     false;
-    spacing:          4px;
-}
-
-element {
-    background-color: transparent;
-    text-color:       @text-color;
-    padding:          8px 12px;
-    border-radius:    6px;
-}
-
-element selected {
-    background-color: @accent;
-    text-color:       #1e1e2e;
-}
-
-element-icon {
-    size:              1.2em;
-    vertical-align:    0.5;
-}
-
-element-text {
-    vertical-align:    0.5;
-}
-
-message {
-    background-color: #313244;
-    border:           1px;
-    border-radius:    8px;
-    padding:          8px;
-    text-color:       @text-color;
-}
-
-textbox {
-    text-color: @text-color;
+    lines: 8;
+    scrollbar: false;          /* Remove scrollbar overhead */
+    fixed-height: true;
 }
