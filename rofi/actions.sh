@@ -12,6 +12,8 @@ declare -A FAVS=(
     ["aw"]="wiki.archlinux.org"
     ["red"]="reddit.com"
     ["ym"]="music.youtube.com"
+    ["google"]="www.google.com"
+    ["duck"]="duckduckgo.com"
 )
 
 # 2. If no input, show the list for Rofi
