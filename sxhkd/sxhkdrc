@@ -2,13 +2,26 @@
 # wm independent hotkeys
 #
 
+# lock
+super + shift + p
+	i3lock --blur 8 --indicator --clock --inside-color=1e1e2eFF --date-str="%a %b %d" --time-str="%I:%M %p" --ring-color=89b4fa --line-color=00000000 --keyhl-color=f38ba8 --bshl-color=f38ba8 --separator-color=00000000 --time-color=89b4faFF --date-color=89b4faFF --time-font="FiraCode Nerd Font" --date-font="FiraCode Nerd Font"
+
 # terminal emulator
 super + Return
-	alacritty
+	st
 
 #rofi program launcher
 super + r
-	rofi -show drun
+	rofi -show drun -theme-str 'configuration \{ show-icons: false; \}'
+
+super + q
+	qutebrowser
+
+super + shift + b
+	rofi -show actions \
+	-theme-str 'window \{ width: 40%; \} listview \{ lines: 1; \} textbox-prompt-colon \{ str: ""; \}' \
+	-p "󰖟 Search: " &
+
 
 #dmenu program launcher
 super + d
@@ -161,6 +174,3 @@ super + alt + x
 super + space
 	~/.config/rofi/hdmi.sh
 
-#Wallpaper change
-super + shift + p
-	~/.config/bspwm/scripts/change-wallpaper.sh
