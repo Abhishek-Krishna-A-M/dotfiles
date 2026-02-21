@@ -1,31 +1,21 @@
-#!/bin/sh
+#!/usr/bin/dash
 
-# Read current SSID
-ssid=$(nmcli -t -f ACTIVE,SSID dev wifi \
-  | grep '^yes' | cut -d: -f2)
+ICON_CONNECTED=""
+ICON_DISCONNECTED="󰖪"
 
-# If no SSID => offline
-if [ -z "$ssid" ]; then
-  echo "󰤭 Disconnected"
-  exit 0
-fi
+get_wifi() {
+    ssid=$(nmcli -t -f active,ssid dev wifi | awk -F: '$1=="yes"{print $2}')
+    if [ -n "$ssid" ]; then
+        echo "$ICON_CONNECTED $ssid"
+    else
+        echo "$ICON_DISCONNECTED"
+    fi
+}
 
-# Read signal % for the used AP
-signal=$(nmcli -t -f IN-USE,SIGNAL dev wifi \
-  | grep '^\*' | cut -d: -f2)
+# initial output
+get_wifi
 
-# Defensive check
-case $signal in
-  ''|*[!0-9]*)
-    icon="󰤯" ;; # default lowest if weird value
-  *)
-    if   [ "$signal" -ge 80 ]; then icon="󰤨"
-    elif [ "$signal" -ge 60 ]; then icon="󰤥"
-    elif [ "$signal" -ge 40 ]; then icon="󰤢"
-    elif [ "$signal" -ge 20 ]; then icon="󰤟"
-    else                            icon="󰤯"
-    fi ;;
-esac
-
-echo "$icon $ssid"
-
+# listen for network changes (NO polling)
+nmcli monitor | while read -r _; do
+    get_wifi
+done

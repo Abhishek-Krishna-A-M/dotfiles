@@ -1,6 +1,20 @@
-#!/bin/bash
+#!/usr/bin/dash
 
-if xrandr | grep -q "^HDMI-1 connected"; then
-    echo "%{F#a6e3a1}󰍹 HDMI ON%{F-}"
-fi
+ICON_ON="󰍹"
+ICON_OFF="󰍺"
+
+status() {
+    if xrandr | grep -q "HDMI.* connected"; then
+        echo "$ICON_ON HDMI"
+    else
+        echo "$ICON_OFF HDMI"
+    fi
+}
+
+status
+
+# listen for udev display events
+udevadm monitor --subsystem-match=drm | while read -r _; do
+    status
+done
 
