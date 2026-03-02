@@ -1,12 +1,13 @@
 /**
- * Minimalist Catppuccin Theme
- * Path: ~/.config/rofi/catppuccin.rasi
+ * Custom Minimalist Theme
+ * Matched to Wallpaper: #1e1d1d
  */
 
 * {
-    bg-col:  #1e1e2e;
-    fg-col:  #cdd6f4;
-    blue:    #89b4fa;
+    bg-col:  #1e1d1d; /* Matches your wallpaper exactly */
+    fg-col:  #d1d1d1; /* A neutral light gray for better blending */
+    blue:    #89b4fa; /* Keep the Catppuccin Blue for a pop of color */
+    
     background-color: @bg-col;
     text-color: @fg-col;
 }
@@ -14,35 +15,43 @@
 window {
     border: 2px;
     border-color: @blue;
+    background-color: @bg-col;
 }
 
 mainbox {
     children: [inputbar, listview];
+    background-color: @bg-col;
 }
 
 inputbar {
     children: [prompt, entry];
     padding: 10px;
+    background-color: @bg-col;
 }
 
 prompt {
     text-color: @blue;
+    background-color: @bg-col;
 }
 
 entry {
     placeholder: "Search...";
-    placeholder-color: #6c7086;
+    placeholder-color: #585b70; /* Muted placeholder */
+    background-color: @bg-col;
 }
 
 listview {
     padding: 5px;
+    background-color: @bg-col;
+    scrollbar: false;
 }
 
 element {
     padding: 8px;
+    background-color: @bg-col;
 }
 
 element selected {
     background-color: @blue;
-    text-color: @bg-col;
+    text-color: @bg-col; /* Text turns dark when highlighted */
 }
