@@ -38,7 +38,8 @@ bspc config pointer_modifier super
 bspc config pointer_action1 move
 bspc config pointer_action2 resize_side
 bspc config pointer_action3 resize_corner
-
+# Allow windows to be placed above the bar layer in fullscreen
+bspc config boundary_head_area false
 
 ### ────────────────
 ### DESKTOPS
@@ -61,10 +62,13 @@ pgrep -x nm-applet >/dev/null || nm-applet &
 pgrep -x picom >/dev/null || picom &
 
 # Wallpaper (SET ONCE — NO LOOP)
-feh --bg-fill ~/Pictures/Untitled\ design.png &
+feh --bg-fill ~/Pictures/arch-black-wallpaper.png &
 
 # Polybar (guarded launch script)
 pgrep -x polybar >/dev/null || ~/.config/polybar/launch.sh &
+
+#Dunst
+pgrep -x dunst >/dev/null || dunst &
 
 
 ### ────────────────
