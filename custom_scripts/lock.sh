@@ -8,7 +8,7 @@ RED='#b04a4aff'
 VERIFY='#ffffff22'
 
 i3lock \
---image=$HOME/Pictures/arch-black-wallpaper.png \
+--image=$HOME/Pictures/locked-wallpaper.png \
 --blur 5 \
 --clock \
 --indicator \
@@ -46,4 +46,4 @@ i3lock \
 --wrong-color=$RED \
 --line-uses-inside \
 --ignore-empty-password \
---screen 1
+--screen 1 \

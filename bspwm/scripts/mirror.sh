@@ -1,26 +1,17 @@
-#!/usr/bin/dash
+#!/usr/bin/env bash
 LAPTOP="eDP-1"
 HDMI="HDMI-1"
 
-# 1. Reset and Get Res
-xrandr --auto
-HDMI_RES=$(xrandr | awk "/^$HDMI connected/ { getline; print \$1; exit }")
-
-if [ -z "$HDMI_RES" ]; then
-    echo "HDMI is not connected."
-    exit 1
-fi
-
-# 2. Re-allocate ALL desktops to the LAPTOP first
-# This ensures 6-10 don't get lost in the void
-for d in {1..10}; do
-    bspc desktop "$d" -m "$LAPTOP"
+# Move all desktops to Laptop so bspwm doesn't panic when HDMI is mirrored
+for i in {1..10}; do 
+    bspc desktop "$i" -m "$LAPTOP"
 done
 
-# 3. Mirror using --scale-from
-xrandr --output "$LAPTOP" --auto --primary \
-       --output "$HDMI" --mode "$HDMI_RES" --same-as "$LAPTOP" --scale-from 1366x768
+# Force Laptop to native res and mirror to HDMI with specific scale-from
+# This is much lighter on the i3-5005U
+xrandr --output "$LAPTOP" --mode 1366x768 --primary \
+       --output "$HDMI" --auto --same-as "$LAPTOP" --scale-from 1366x768
 
-# 4. Remove the HDMI monitor from bspwm's internal list (optional but cleaner)
-# This forces bspwm to only care about the laptop screen
+# Cleanup: remove HDMI from bspwm indexing to avoid workspace duplication
+sleep 0.5
 bspc monitor "$HDMI" -r 2>/dev/null

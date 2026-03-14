@@ -186,40 +186,43 @@ char *xdndescchar = " !\"#$&'()*;<>?[\\]^`{|}~";
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-	/* 8 normal colors */
-	"black",
-	"red3",
-	"green3",
-	"yellow3",
-	"blue2",
-	"magenta3",
-	"cyan3",
-	"gray90",
+    /* 8 normal colors */
+    "#0e1012", /* black   - Deep mountain shadow */
+    "#7a4040", /* red     - Muted ember */
+    "#556655", /* green   - Moss/pine muted */
+    "#7a7a68", /* yellow  - Ash stone */
+    "#4a5568", /* blue    - Misty steel */
+    "#5f4f6e", /* magenta - Foggy violet */
+    "#4a6a6a", /* cyan    - Mist teal */
+    "#b0b0b0", /* white   - Fog silver */
 
-	/* 8 bright colors */
-	"gray50",
-	"red",
-	"green",
-	"yellow",
-	"#5c5cff",
-	"magenta",
-	"cyan",
-	"white",
+    /* 8 bright colors */
+    "#252729", /* black   - Lighter charcoal mist */
+    "#9c3e3e", /* red     - Brighter ember */
+    "#7a9a7a", /* green   - Mountain pine */
+    "#9a9a82", /* yellow  - Warm fog */
+    "#6680a0", /* blue    - Clear sky through mist */
+    "#8a6a9a", /* magenta - Lifted violet */
+    "#6a9a9a", /* cyan    - Mist shimmer */
+    "#e8e8e8", /* white   - Bright overcast */
 
-	[255] = 0,
-
-	/* more colors can be added after 255 to use with DefaultXX */
-	"#add8e6", /* 256 -> cursor */
-	"#555555", /* 257 -> rev cursor*/
-	"#000000", /* 258 -> bg */
-	"#e5e5e5", /* 259 -> fg */
+    [255] = 0,
+    "#e8e8e8", /* 256 -> cursor */
+    "#0e1012", /* 257 -> rev cursor */
+    "#111314", /* 258 -> bg: Near-black mountain dark */
+    "#d0d0d0", /* 259 -> fg: Cool fog gray */
 };
 
+unsigned int defaultbg = 258;
+unsigned int defaultfg = 259;
+unsigned int defaultcs = 256;
+unsigned int defaultrcs = 257;
 
 /*
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
+/*
 #if ALPHA_PATCH && ALPHA_FOCUS_HIGHLIGHT_PATCH
 unsigned int defaultbg = 0;
 unsigned int bg = 17, bgUnfocused = 16;
@@ -229,6 +232,7 @@ unsigned int defaultbg = 258;
 unsigned int defaultfg = 259;
 unsigned int defaultcs = 256;
 unsigned int defaultrcs = 257;
+*/
 #if SELECTION_COLORS_PATCH
 unsigned int selectionfg = 258;
 unsigned int selectionbg = 259;

@@ -4,10 +4,9 @@
 ### ENVIRONMENT
 ### ────────────────
 
-# Faster key repeat (optional)
+# Faster key repeat
 xset r rate 300 50
 
-# Disable DPMS / screen blanking (prevents wake lag)
 xset -dpms
 xset s off
 xset s noblank
@@ -16,7 +15,6 @@ xset s noblank
 ### ────────────────
 ### BSPWM CONFIG
 ### ────────────────
-
 bspc config border_width        2
 bspc config window_gap          6
 
@@ -61,15 +59,16 @@ pgrep -x nm-applet >/dev/null || nm-applet &
 # Compositor (light config assumed)
 pgrep -x picom >/dev/null || picom &
 
-# Wallpaper (SET ONCE — NO LOOP)
-feh --bg-fill ~/Pictures/arch-black-wallpaper.png &
+# Wallpaper 
+xwallpaper --zoom ~/Pictures/arch-fullhd-wallpaper.png &
 
 # Polybar (guarded launch script)
 pgrep -x polybar >/dev/null || ~/.config/polybar/launch.sh &
 
 #Dunst
 pgrep -x dunst >/dev/null || dunst &
-
+# Start the clipboard manager
+pgrep -x greenclip >/dev/null || greenclip daemon &
 
 ### ────────────────
 ### PERFORMANCE FIXES
@@ -80,4 +79,4 @@ wmname LG3D >/dev/null 2>&1 &
 
 # Reduce input latency
 xinput set-prop "pointer:Logitech USB Optical Mouse" "Device Accel Profile" -1 2>/dev/null
-
+xss-lock --transfer-sleep-lock -- ~/.config/custom_scripts/lock.sh &
