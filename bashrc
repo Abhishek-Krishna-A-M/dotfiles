@@ -21,6 +21,8 @@ git_prompt_info() {
   done
 }
 
+
+
 # 3. The Classic Look (Fixed & Sharp)
 # [user@host folder (branch)]$ 
 PS1='[\[\033[1;32m\]\u@\h \[\033[1;34m\]\W\[\033[0m\]$(git_prompt_info)]\$ '
@@ -44,6 +46,8 @@ alias gp='git push'
 export ANDROID_HOME="$HOME/Android/Sdk"
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export EDITOR="nvim"
+export TERMINAL="st"
+eval "$(direnv hook bash)"
 
 # Add paths only if they exist
 for d in "$ANDROID_HOME/cmdline-tools/latest/bin" "$ANDROID_HOME/platform-tools" "$PNPM_HOME"; do
