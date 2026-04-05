@@ -188,31 +188,28 @@ char *xdndescchar = " !\"#$&'()*;<>?[\\]^`{|}~";
 static const char *colorname[] = {
     /* 8 normal colors */
     "#0e1012", /* black   - Deep mountain shadow */
-    "#7a4040", /* red     - Muted ember */
-    "#556655", /* green   - Moss/pine muted */
-    "#7a7a68", /* yellow  - Ash stone */
-    "#4a5568", /* blue    - Misty steel */
-    "#5f4f6e", /* magenta - Foggy violet */
-    "#4a6a6a", /* cyan    - Mist teal */
-    "#b0b0b0", /* white   - Fog silver */
-
+    "#c46464", /* red     - Warm ember glow */
+    "#7aaa7a", /* green   - Sunlit pine */
+    "#c8c8a0", /* yellow  - Bright ash stone */
+    "#7a90b8", /* blue    - Clear mountain sky */
+    "#9a7ab8", /* magenta - Lifted foggy violet */
+    "#6ab8b8", /* cyan    - Bright mist teal */
+    "#d8d8d8", /* white   - Bright overcast */
     /* 8 bright colors */
-    "#252729", /* black   - Lighter charcoal mist */
-    "#9c3e3e", /* red     - Brighter ember */
-    "#7a9a7a", /* green   - Mountain pine */
-    "#9a9a82", /* yellow  - Warm fog */
-    "#6680a0", /* blue    - Clear sky through mist */
-    "#8a6a9a", /* magenta - Lifted violet */
-    "#6a9a9a", /* cyan    - Mist shimmer */
-    "#e8e8e8", /* white   - Bright overcast */
-
+    "#3a3d40", /* black   - Lifted charcoal */
+    "#e07878", /* red     - Bright ember */
+    "#9acf9a", /* green   - Vivid mountain pine */
+    "#e0e0b8", /* yellow  - Warm sunlit fog */
+    "#90acd0", /* blue    - Crisp sky break */
+    "#b890d0", /* magenta - Clear violet peak */
+    "#90d0d0", /* cyan    - Shimmer mist */
+    "#f0f0f0", /* white   - Crisp snow light */
     [255] = 0,
-    "#e8e8e8", /* 256 -> cursor */
+    "#c8e8e8", /* 256 -> cursor - mist shimmer */
     "#0e1012", /* 257 -> rev cursor */
     "#111314", /* 258 -> bg: Near-black mountain dark */
-    "#d0d0d0", /* 259 -> fg: Cool fog gray */
+    "#e0e0e0", /* 259 -> fg: Bright fog gray */
 };
-
 unsigned int defaultbg = 258;
 unsigned int defaultfg = 259;
 unsigned int defaultcs = 256;
