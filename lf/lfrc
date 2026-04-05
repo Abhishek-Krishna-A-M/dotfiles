@@ -63,8 +63,7 @@ map m rename
 map x cut
 map Y shell echo -n "$f" | xclip -selection clipboard
 # New Browser Bind
-map B &thorium-browser-avx2 "$f"
-
+map B &waterfox "$f"
 # Clipboard & Terminal
 map Y &echo -n "$f" | xclip -selection clipboard
 # Match st colors: Directories in Steel Blue, Executables in Sage Green
