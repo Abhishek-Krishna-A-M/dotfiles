@@ -12,6 +12,7 @@ declare -A FAVS=(
     ["ym"]="music.youtube.com"
     ["google"]="www.google.com"
     ["duck"]="duckduckgo.com"
+    
 )
 
 # 2. STAGE 1: Provide the list for dmenu [cite: 1]
@@ -31,6 +32,9 @@ CLEAN_INPUT=$(echo "$INPUT" | awk '{print $1}')
 # 3. ROUTING LOGIC [cite: 1]
 if [[ -n "${FAVS[$CLEAN_INPUT]}" ]]; then
     TARGET="https://${FAVS[$CLEAN_INPUT]}"
+elif [[ "$INPUT" =~ ^([0-9]+)$ ]]; then
+    PORT="${BASH_REMATCH[1]}"
+    TARGET="http://localhost:$PORT"
 elif [[ "$INPUT" =~ ^:d\  ]]; then
     QUERY=$(echo "$INPUT" | sed 's/^:d //; s/ /+/g')
     TARGET="https://duckduckgo.com/?q=$QUERY"
@@ -47,7 +51,7 @@ fi
 
 # 4. EXECUTION
 # Using setsid and & to fully detach from the dmenu process
-(setsid xdg-open "$TARGET" &) > /dev/null 2>&1
+(setsid waterfox "$TARGET" &) > /dev/null 2>&1
 exit 0
 
 exit 0

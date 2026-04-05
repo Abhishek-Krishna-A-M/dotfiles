@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AK</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div id="search">
+        <div class="search-container">
+            <div class="search-prompt">System Query: Google</div>
+            <input id="search-field" type="text" autocomplete="off" placeholder="..." />
+        </div>
+    </div>
+
+    <main class="container">
+        <header>
+            <h1 class="welcome-msg">USER: <span class="accent">AK</span></h1>
+            <div id="clock">00:00:00</div>
+        </header>
+
+        <section id="bookmark-container">
+            <div class="bookmark-set">
+                <div class="bookmark-title">Development</div>
+                <div class="bookmark-inner-container">
+                    <a class="bookmark" href="https://github.com">GitHub</a>
+                    <a class="bookmark" href="https://supabase.com">Supabase</a>
+                    <a class="bookmark" href="https://mongodb.com">MongoDB</a>
+                    <a class="bookmark" href="https://tailwindcss.com">Tailwind CSS</a>
+                    <a class="bookmark" href="https://www.w3schools.com">W3Schools</a>
+                </div>
+            </div>
+
+            <div class="bookmark-set">
+                <div class="bookmark-title">Productivity</div>
+                <div class="bookmark-inner-container">
+                    <a class="bookmark" href="https://drive.google.com">Google Drive</a>
+                    <a class="bookmark" href="https://docs.google.com">Google Docs</a>
+                    <a class="bookmark" href="https://sheets.google.com">Google Sheets</a>
+                    <a class="bookmark" href="https://slides.google.com">Google Slides</a>
+                    <a class="bookmark" href="https://www.canva.com">Canva</a>
+                </div>
+            </div>
+
+            <div class="bookmark-set">
+                <div class="bookmark-title">AI & Knowledge</div>
+                <div class="bookmark-inner-container">
+                    <a class="bookmark" href="https://chatgpt.com">ChatGPT</a>
+                    <a class="bookmark" href="https://gemini.google.com">Gemini</a>
+                    <a class="bookmark" href="https://wiki.archlinux.org">Arch Wiki</a>
+                    <a class="bookmark" href="https://reddit.com">Reddit</a>
+                </div>
+            </div>
+
+            <div class="bookmark-set">
+                <div class="bookmark-title">Media</div>
+                <div class="bookmark-inner-container">
+                    <a class="bookmark" href="https://music.youtube.com">YT Music</a>
+                    <a class="bookmark" href="https://youtube.com">YouTube</a>
+                    <a class="bookmark" href="https://mail.google.com">Gmail</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const searchUrl = "https://google.com/search?q=";
+
+        function updateClock() {
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+            document.getElementById("clock").innerText = time;
+        }
+
+        const searchDiv = document.getElementById("search");
+        const searchInput = document.getElementById("search-field");
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === " " || e.key === "/") { 
+                if (document.activeElement !== searchInput) {
+                    e.preventDefault();
+                    searchDiv.style.display = "flex";
+                    searchInput.focus();
+                }
+            }
+            if (e.key === "Escape") { 
+                searchDiv.style.display = "none";
+                searchInput.value = "";
+                searchInput.blur();
+            }
+        });
+
+        searchInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter" && searchInput.value.trim() !== "") {
+                window.location.href = searchUrl + encodeURIComponent(searchInput.value);
+            }
+        });
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>

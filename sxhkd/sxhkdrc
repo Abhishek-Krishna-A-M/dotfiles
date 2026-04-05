@@ -18,11 +18,20 @@ super + r
 	-sb "#000000" \
 	-sf "#ffffff"
 
-super + q
-	qutebrowser
+
+# Fuzzy find, edit, and keep terminal open in that directory
+super + alt + f
+	st -e sh -c 'file=$(fzf) && full_path=$(realpath "$file") && cd "$(dirname "$full_path")" && nvim "$full_path" && exec $SHELL'
+
+super + shift + f
+	st -e bash -i -c "lf; exec bash"
+
+#open waterfox
+super + shift + b
+	basilisk
 
 # Faster Action/Search Menu (dmenu version)
-super + shift + b
+super + alt + b
     ~/.config/custom_scripts/run_actions.sh
 
 # make sxhkd reload its configuration files:
@@ -139,23 +148,17 @@ super + alt + shift + {h,j,k,l}
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
-# Volume
+# Volume Up
 XF86AudioRaiseVolume
-    pamixer -i 5
+    amixer sset Master 5%+
 
+# Volume Down
 XF86AudioLowerVolume
-    pamixer -d 5
+    amixer sset Master 5%-
 
+# Mute
 XF86AudioMute
-    pamixer -t
-
-# Media Controls
-XF86AudioPlay
-    playerctl play-pause
-XF86AudioNext
-    playerctl next
-XF86AudioPrev
-    playerctl previous
+    amixer sset Master toggle
 
 # Brightness
 XF86MonBrightnessUp
