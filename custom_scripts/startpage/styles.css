@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --bg: #0a0a0a;           /* Deep Black */
+  --container-bg: #141414;  /* Dark Gray Surface */
+  --accent: #ffffff;       /* Pure White */
+  --fg: #e0e0e0;           /* Light Gray Text */
+  --dim: #666666;          /* Muted Gray for subtext */
+  --font-main: 'JetBrains Mono', monospace;
+}
+
+body {
+  background-color: var(--bg);
+  /* Added a subtle gradient to mimic the wallpaper's fog */
+  background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+  color: var(--fg);
+  font-family: var(--font-main);
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  width: 95%;
+  max-width: 1200px;
+  text-align: center;
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* Header */
+.welcome-msg {
+  font-size: 0.9rem;
+  letter-spacing: 12px;
+  color: var(--dim);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.accent {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+#clock {
+  font-size: 7rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 3.5rem;
+  letter-spacing: -2px;
+  /* Soft white glow to match the misty look */
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+}
+
+/* 4-Column Bookmark Grid */
+#bookmark-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.bookmark-set {
+  background: rgba(255, 255, 255, 0.03); /* Semi-transparent */
+  padding: 1.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  text-align: left;
+}
+
+.bookmark-set:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--accent);
+  transform: translateY(-8px);
+}
+
+.bookmark-title {
+  color: var(--accent);
+  font-weight: bold;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  letter-spacing: 3px;
+  border-bottom: 1px solid var(--dim);
+  padding-bottom: 8px;
+  display: block;
+}
+
+.bookmark {
+  display: block;
+  text-decoration: none;
+  color: var(--dim);
+  padding: 6px 0;
+  font-size: 0.85rem;
+  transition: 0.3s;
+}
+
+.bookmark:hover {
+  color: var(--accent);
+  padding-left: 10px;
+}
+
+/* Search Overlay */
+#search {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  backdrop-filter: blur(10px); /* Frosty effect */
+}
+
+.search-container {
+  width: 70%;
+  text-align: left;
+}
+
+.search-prompt {
+  color: var(--dim);
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+#search-field {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--dim);
+  color: var(--accent);
+  font-size: 5rem;
+  font-family: var(--font-main);
+  outline: none;
+  font-weight: 700;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 1000px) {
+  #bookmark-container { grid-template-columns: repeat(2, 1fr); }
+  #clock { font-size: 4rem; }
+}
