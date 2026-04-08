@@ -1,0 +1,82 @@
+#!/usr/bin/dash
+
+### ────────────────
+### ENVIRONMENT
+### ────────────────
+
+# Faster key repeat
+xset r rate 300 50
+
+xset -dpms
+xset s off
+xset s noblank
+
+
+### ────────────────
+### BSPWM CONFIG
+### ────────────────
+bspc config border_width        2
+bspc config window_gap          6
+
+bspc config split_ratio         0.52
+bspc config borderless_monocle  true
+bspc config gapless_monocle     false
+
+bspc config focus_follows_pointer true
+bspc config pointer_follows_focus true
+
+bspc config click_to_focus      true
+bspc config single_monocle      true
+
+bspc config normal_border_color "#a2a2a2"
+bspc config active_border_color "#e2e2e2"
+bspc config focused_border_color "#e2e2e2"
+bspc rule -a St state=floating center=true rectangle=800x600+0+0
+bspc config pointer_modifier super
+bspc config pointer_action1 move
+bspc config pointer_action2 resize_side
+bspc config pointer_action3 resize_corner
+# Allow windows to be placed above the bar layer in fullscreen
+bspc config boundary_head_area false
+
+### ────────────────
+### DESKTOPS
+### ────────────────
+
+bspc monitor -d 1 2 3 4 5 6 7 8 9
+
+
+### ────────────────
+### AUTOSTART (GUARDED)
+### ────────────────
+
+# Key daemon
+pgrep -x sxhkd >/dev/null || sxhkd &
+
+# Network tray (lightweight, optional)
+pgrep -x nm-applet >/dev/null || nm-applet &
+
+# Compositor (light config assumed)
+pgrep -x picom >/dev/null || picom &
+
+# Wallpaper 
+xwallpaper --zoom ~/Pictures/Red.png &
+
+# Polybar (guarded launch script)
+pgrep -x polybar >/dev/null || ~/.config/polybar/launch.sh &
+
+#Dunst
+pgrep -x dunst >/dev/null || dunst &
+# Start the clipboard manager
+pgrep -x greenclip >/dev/null || greenclip daemon &
+
+### ────────────────
+### PERFORMANCE FIXES
+### ────────────────
+
+# Prevent Java / Electron DPI lag
+wmname LG3D >/dev/null 2>&1 &
+
+# Reduce input latency
+xinput set-prop "pointer:Logitech USB Optical Mouse" "Device Accel Profile" -1 2>/dev/null
+xss-lock --transfer-sleep-lock -- ~/.config/custom_scripts/lock.sh &

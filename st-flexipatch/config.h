@@ -186,35 +186,37 @@ char *xdndescchar = " !\"#$&'()*;<>?[\\]^`{|}~";
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-    /* 8 normal colors */
-    "#0e1012", /* black   - Deep mountain shadow */
-    "#c46464", /* red     - Warm ember glow */
-    "#7aaa7a", /* green   - Sunlit pine */
-    "#c8c8a0", /* yellow  - Bright ash stone */
-    "#7a90b8", /* blue    - Clear mountain sky */
-    "#9a7ab8", /* magenta - Lifted foggy violet */
-    "#6ab8b8", /* cyan    - Bright mist teal */
-    "#d8d8d8", /* white   - Bright overcast */
-    /* 8 bright colors */
-    "#3a3d40", /* black   - Lifted charcoal */
-    "#e07878", /* red     - Bright ember */
-    "#9acf9a", /* green   - Vivid mountain pine */
-    "#e0e0b8", /* yellow  - Warm sunlit fog */
-    "#90acd0", /* blue    - Crisp sky break */
-    "#b890d0", /* magenta - Clear violet peak */
-    "#90d0d0", /* cyan    - Shimmer mist */
-    "#f0f0f0", /* white   - Crisp snow light */
+    /* 8 normal colors - Crushed & Desaturated */
+    "#1a1a1a", /* black   - Deepest charcoal */
+    "#b36868", /* red     - Muted crimson */
+    "#789978", /* green   - Sage leaf */
+    "#a6a68a", /* yellow  - Weathered stone */
+    "#6d81a3", /* blue    - Deep slate sky */
+    "#8e74a6", /* magenta - Dark lavender */
+    "#629c9c", /* cyan    - Steel teal */
+    "#b0b0b0", /* white   - Medium gray */
+
+    /* 8 bright colors - The High Contrast Accents */
+    "#404040", /* black   - Lighter charcoal */
+    "#d18282", /* red     - Desaturated rose */
+    "#8eb38e", /* green   - Pale forest */
+    "#c4c4a5", /* yellow  - Faded parchment */
+    "#8ca1c2", /* blue    - Soft denim */
+    "#aa94c2", /* magenta - Pastel violet */
+    "#8bc2c2", /* cyan    - Pale aqua */
+    "#ffffff", /* white   - Pure white (Matches logo) */
+
     [255] = 0,
-    "#c8e8e8", /* 256 -> cursor - mist shimmer */
-    "#0e1012", /* 257 -> rev cursor */
-    "#111314", /* 258 -> bg: Near-black mountain dark */
-    "#e0e0e0", /* 259 -> fg: Bright fog gray */
+    "#ffffff", /* 256 -> cursor - Pure white punch */
+    "#000000", /* 257 -> rev cursor */
+    "#000000", /* 258 -> bg: Pure OLED Black */
+    "#dcdcdc", /* 259 -> fg: Clean White/Gray */
 };
+
 unsigned int defaultbg = 258;
 unsigned int defaultfg = 259;
 unsigned int defaultcs = 256;
 unsigned int defaultrcs = 257;
-
 /*
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
