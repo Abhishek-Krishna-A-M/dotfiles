@@ -1,0 +1,134 @@
+! --- urxvt Configuration (Matched to st config.h) ---
+URxvt.scrollTtyOutput: true
+URxvt.scrollWithBuffer: true
+URxvt.scrollTtyKeypress: true
+! Font: Matches Fira Code Nerd Font pixelsize 16
+URxvt.font: xft:FiraCode Nerd Font:pixelsize=16:antialias=true,xft:FiraCode Nerd Font Mono:pixelsize=18:antialias=true
+URxvt.letterSpace: 0
+URxvt.lineSpace: 0
+URxvt.internalBorder: 4
+URxvt.externalBorder: 0
+URxvt.buffered: true
+! Scrolling
+URxvt.saveLines: 2000
+URxvt.scrollBar: false
+
+! Cursor Style: Matches cursorshape = 2 (Block)
+URxvt.cursorBlink: true
+URxvt.cursorUnderline: false
+
+! Transparency (Matches alpha = 0.8)
+! Note: Requires a compositor like picom
+URxvt.depth: 32
+URxvt.background: [80]#000409
+
+! --- Colors (Mapped from st colorname array) ---
+
+! Special
+URxvt.foreground: #dcdcdc
+URxvt.cursorColor: #ffffff
+! URxvt.background is defined above with alpha
+
+! Black
+URxvt.color0:  #1a1a1a
+URxvt.color8:  #404040
+! Red
+URxvt.color1:  #b36868
+URxvt.color9:  #d18282
+! Green
+URxvt.color2:  #789978
+URxvt.color10: #8eb38e
+! Yellow
+URxvt.color3:  #a6a68a
+URxvt.color11: #c4c4a5
+! Blue
+URxvt.color4:  #6d81a3
+URxvt.color12: #8ca1c2
+! Magenta
+URxvt.color5:  #8e74a6
+URxvt.color13: #aa94c2
+! Cyan
+URxvt.color6:  #629c9c
+URxvt.color14: #8bc2c2
+! White
+URxvt.color7:  #b0b0b0
+URxvt.color15: #ffffff
+
+! --- Keybindings (Mimicking st shortcuts) ---
+
+! 1. Tell urxvt where your local scripts are (REQUIRED since they are in ~/.urxvt/ext/)
+URxvt.perl-lib: /home/ak/.urxvt/ext/
+
+! 2. ALL extensions must be on this ONE line (No spaces after commas!)
+URxvt.perl-ext-common: default,keyboard-select,font-size
+
+! 3. Clipboard (This stays the same)
+URxvt.iso14755: false
+URxvt.keysym.C-Shift-C: eval:selection_to_clipboard
+URxvt.keysym.C-Shift-V: eval:paste_clipboard
+
+! 4. Keyboard Select (This stays the same)
+URxvt.keysym.C-Shift-S: perl:keyboard-select:activate
+URxvt.keyboard-select.clipboard: true
+! 5. Font Zoom (Updated to use your preferred Shift+PageUp/Down keys)
+URxvt.keysym.C-Shift-Prior: perl:font-size:increase
+URxvt.keysym.C-Shift-Next:  perl:font-size:decrease
+URxvt.keysym.C-equal:       perl:font-size:increase
+URxvt.keysym.C-minus:       perl:font-size:decrease
+URxvt.keysym.C-0:           perl:font-size:reset
+
+! ==============================================================================
+! XTERM CONFIGURATION
+! ==============================================================================
+
+! Font: Matches Fira Code Nerd Font pixelsize 16
+UXTerm*faceName: Fira Code Nerd Font Mono:pixelsize=16:antialias=true:autohint=true
+UXTerm*scaleHeight: 1.0
+
+! Scrolling & History
+UXTerm*saveLines: 2000
+UXTerm*scrollBar: false
+UXTerm*scrollbar: false
+UXTerm*jumpScroll: true
+UXTerm*multiScroll: true
+
+! Cursor Style: Matches cursorshape = 2 (Block)
+UXTerm*cursorBlink: true
+UXTerm*cursorColor: #ffffff
+
+! Transparency Note: 
+! UXTerm does not natively support the [80]#hex background transparency 
+! syntax like URxvt. It relies on your compositor (picom) to handle 
+! opacity via window rules.
+UXTerm*background: #000409
+UXTerm*foreground: #dcdcdc
+
+! --- Colors (Mapped from st colorname array) ---
+UXTerm*color0:  #1a1a1a
+UXTerm*color8:  #404040
+UXTerm*color1:  #b36868
+UXTerm*color9:  #d18282
+UXTerm*color2:  #789978
+UXTerm*color10: #8eb38e
+UXTerm*color3:  #a6a68a
+UXTerm*color11: #c4c4a5
+UXTerm*color4:  #6d81a3
+UXTerm*color12: #8ca1c2
+UXTerm*color5:  #8e74a6
+UXTerm*color13: #aa94c2
+UXTerm*color6:  #629c9c
+UXTerm*color14: #8bc2c2
+UXTerm*color7:  #b0b0b0
+UXTerm*color15: #ffffff
+
+! --- Keybindings ---
+! UXTerm uses "Translations" for keybindings. 
+! This enables Ctrl+Shift+C/V for clipboard.
+UXTerm*vt100.translations: #override \
+    Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\
+    Ctrl Shift <Key>V: insert-selection(CLIPBOARD) \n\
+    Ctrl <Key>minus: smaller-vt-font() \n\
+    Ctrl <Key>plus: larger-vt-font() \n\
+    Ctrl <Key>equal: larger-vt-font() \n\
+    Ctrl <Key>0: set-vt-font(d)
+

@@ -31,13 +31,16 @@ cmd open ${{
                 nsxiv -a "$f" >/dev/null 2>&1 &
                 ;;
             application/pdf)
-                thorium-browser-avx2 "$f" >/dev/null 2>&1 &
+                waterfox "$f" >/dev/null 2>&1 &
+                ;;
+            video/*)
+                mpv "$f"
                 ;;
             text/*|application/json|*javascript|*xml|*shellscript)
                 nvim "$f"
                 ;;
             *)
-                thorium-browser-avx2 "$f" >/dev/null 2>&1 &
+                waterfox "$f" >/dev/null 2>&1 &
                 ;;
         esac
     fi
