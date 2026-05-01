@@ -28,22 +28,6 @@ require 'config.keymaps'
 -- =====================================================================
 require 'config.snippets'
 
--- ============================================================
--- Transparency
--- ============================================================
-local function highlight_transparent()
-local groups = { 
-    "Normal", "NormalNC", "LineNr", "Folded", "NonText", 
-    "SpecialKey", "VertSplit", "SignColumn", "EndOfBuffer",
-    "TabLine", "TabLineFill", "StatusLine", "StatusLineNC",
-    "WinSeparator", "CursorLineNr" 
-}
-    for _, group in ipairs(groups) do
-        vim.api.nvim_set_hl(0, group, { bg = "NONE", ctermbg = "NONE" })
-    end
-end
-
-highlight_transparent()
 -- =====================================================================
 --  Setup lazy.nvim plugin manager
 -- =====================================================================
@@ -81,7 +65,22 @@ require('lazy').setup('plugins', {
   },
 })
 
+-- ============================================================
+-- Transparency
+-- ============================================================
+local function highlight_transparent()
+local groups = { 
+    "Normal", "NormalNC", "LineNr", "Folded", "NonText", 
+    "SpecialKey", "VertSplit", "SignColumn", "EndOfBuffer",
+    "TabLine", "TabLineFill", "StatusLine", "StatusLineNC",
+    "WinSeparator", "CursorLineNr" 
+}
+    for _, group in ipairs(groups) do
+        vim.api.nvim_set_hl(0, group, { bg = "NONE", ctermbg = "NONE" })
+    end
+end
 
+highlight_transparent()
 -- =====================================================================
 --  Autocommands (optional: add your own in lua/config/autocmds.lua)
 -- =====================================================================
@@ -94,6 +93,28 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Simple, high-performance statusline
+function MyStatusLine()
+  local parts = {
+    "%#StatusLineMode# ",
+    vim.fn.mode():upper(), -- Current Mode (NORMAL, INSERT, etc)
+    " %#StatusLine# ",
+    "%f",                  -- Path to the file
+    "%m",                  -- Modified flag [+]
+    "%r",                  -- Read-only flag [RO]
+    "%=",                  -- Alignment separator (Left | Right)
+    "%#StatusLineLSP# ",
+    -- Simple LSP Diagnostic count (if LSP is attached)
+    (function()
+      local count = #vim.diagnostic.get(0, {severity = vim.diagnostic.severity.ERROR})
+      return count > 0 and ("E:" .. count .. " ") or ""
+    end)(),
+    "%#StatusLine# ",
+    "%l:%c ",              -- Line:Column
+    "%p%% ",               -- Percentage through file
+  }
+  return table.concat(parts)
+end
 -- =====================================================================
 --  Modeline
 -- =====================================================================

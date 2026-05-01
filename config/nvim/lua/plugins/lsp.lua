@@ -87,7 +87,6 @@ return {
       settings = {
         typescript = {
           tsserver = {
-            maxTsServerMemory = 512, -- RAM Cap
           },
         },
         vtsls = {

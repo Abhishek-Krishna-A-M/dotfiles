@@ -8,7 +8,10 @@ super + shift + p
 
 # terminal emulator
 super + Return
-	st
+	urxvtc
+
+super + alt + Return
+	uxterm
 
 # Application Launcher
 super + r
@@ -28,7 +31,7 @@ super + shift + f
 
 #open waterfox
 super + shift + b
-	basilisk
+	waterfox
 
 # Faster Action/Search Menu (dmenu version)
 super + alt + b
@@ -104,13 +107,13 @@ super + {o,i}
 	bspc node {older,newer} -f; \
 	bspc wm -h on
 
-# focus the given desktop
-super + {1-9,0}
-    bspc desktop -f '^{1-9,10}'
+# focus the given desktop (Super + 1-0 or Super + Numpad 1-0)
+super + {1-9,0,KP_End,KP_Down,KP_Next,KP_Left,KP_Begin,KP_Right,KP_Home,KP_Up,KP_Prior,KP_Insert}
+    bspc desktop -f '^{1-9,10,1-9,10}'
 
-# move window to desktop AND follow it
-super + shift + {1-9,0}
-    bspc node -d '^{1-9,10}' --follow
+# move window to desktop AND follow it (Super + Shift + 1-0 or Super + Shift + Numpad 1-0)
+super + shift + {1-9,0,KP_End,KP_Down,KP_Next,KP_Left,KP_Begin,KP_Right,KP_Home,KP_Up,KP_Prior,KP_Insert}
+    bspc node -d '^{1-9,10,1-9,10}' --follow
 
 #
 # preselect

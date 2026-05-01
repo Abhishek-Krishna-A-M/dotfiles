@@ -50,7 +50,6 @@ alias ls='ls --color=auto --group-directories-first'
 alias grep='grep --color=auto'
 alias vi='vim'
 alias nv='nvim'
-alias clr='clear'
 alias clock='tty-clock -sctC 7 -f "%A, %B %d, %Y"'
 # Git Aliases
 alias gs='git status'
@@ -59,6 +58,7 @@ alias gc='git commit'
 alias gco='git checkout'
 alias gl='git log --oneline --graph --all'
 alias gp='git push'
+alias gup='~/scripts/gpush.sh'
 
 # 5. Path & Environment
 # Android SDK
@@ -69,7 +69,6 @@ export PNPM_HOME="$HOME/.local/share/pnpm"
 export EDITOR="nvim"
 export TERMINAL="st"
 export PATH="/home/ak/.bun/bin:$PATH"
-eval "$(direnv hook bash)"
 
 # Add paths only if they exist
 for d in "$ANDROID_HOME/cmdline-tools/latest/bin" "$ANDROID_HOME/platform-tools" "$PNPM_HOME"; do
@@ -80,4 +79,6 @@ done
 unset d
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-}"
 
-
+if [ "$TERM" = "rxvt-unicode-256color" ] || [ "$TERM" = "rxvt-unicode" ]; then
+    clear
+fi
