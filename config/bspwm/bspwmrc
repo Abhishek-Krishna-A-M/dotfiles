@@ -63,7 +63,7 @@ pgrep -x nm-applet >/dev/null || nm-applet &
 pgrep -x picom >/dev/null || picom &
 
 # Wallpaper 
-xwallpaper --zoom ~/Pictures/Red.png &
+xwallpaper --zoom ~/Pictures/artix-wallpaper.png &
 
 # Polybar (guarded launch script)
 pgrep -x polybar >/dev/null || ~/.config/polybar/launch.sh &
