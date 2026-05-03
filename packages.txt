@@ -1,1 +1,1 @@
-dash polybar picom bspwm sxhkd i3lock-color urxvt xterm neovim xorg-server xorg-xinput xwallpaper flameshot dmenu-fuzzy
+dash polybar picom bspwm sxhkd i3lock-color urxvt xterm neovim xorg-server xorg-xinput xwallpaper flameshot j4-dmenu-desktop

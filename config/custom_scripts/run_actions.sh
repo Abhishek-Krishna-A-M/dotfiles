@@ -5,7 +5,7 @@ SCRIPT="$HOME/.config/custom_scripts/actions.sh"
 
 # 1. Get the list and capture the user choice 
 # Using your exact Catppuccin-inspired colors [cite: 1, 2]
-choice=$("$SCRIPT" | dmenu -l 1 -p "󰖟 Search:" \
+choice=$("$SCRIPT" | dmenu -c -l 1 -p "󰖟 Search:" \
 	-nb "#000409" \
 	-nf "#ffffff" \
 	-sb "#f2f2f2" \
