@@ -13,13 +13,13 @@ super + Return
 super + alt + Return
 	uxterm
 
-# Application Launcher
+# Application Launcher (Desktop Apps)
 super + r
-	dmenu_run -i -l 5 -p "Run:" -fn "FiraCode Nerd Font:size=10" \
-	-nb "#000409" \
-	-nf "#ffffff" \
-	-sb "#f2f2f2" \
-	-sf "#000409"
+    j4-dmenu-desktop --dmenu='dmenu -c -i -l 10 -p "Apps:" -fn "FiraCode Nerd Font:size=10" -nb "#000409" -nf "#ffffff" -sb "#f2f2f2" -sf "#000409" -bw 2'
+
+# Command Runner (Raw Binaries/Scripts)
+super + shift + r
+    dmenu_run -c -i -l 10 -p "Run:" -fn "FiraCode Nerd Font:size=10" -nb "#000409" -nf "#ffffff" -sb "#f2f2f2" -sf "#000409" -bw 2
 
 
 # Fuzzy find, edit, and keep terminal open in that directory

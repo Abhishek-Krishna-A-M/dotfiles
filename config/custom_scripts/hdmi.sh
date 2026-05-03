@@ -6,7 +6,7 @@ FG="#1a1a1a"
 SEL_BG="#000000"  
 SEL_FG="#ffffff"  
 
-chosen=$(printf "Mirror\nExtend\nReset" | dmenu -i -l 3 -p "Display:" \
+chosen=$(printf "Mirror\nExtend\nReset" | dmenu -c -i -l 3 -p "Display:" \
 	-nb "#000409" \
 	-nf "#ffffff" \
 	-sb "#f2f2f2" \

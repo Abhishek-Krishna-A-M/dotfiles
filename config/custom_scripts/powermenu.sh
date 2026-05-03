@@ -4,7 +4,7 @@
 options="Lock\nLogout\nReboot\nPower Off\nSleep"
 
 # Custom dmenu styling to match your Misty White theme
-chosen=$(echo -e "$options" | dmenu -i -l 5 -p "System:" \
+chosen=$(echo -e "$options" | dmenu -c -i -l 5 -p "System:" \
 	-nb "#000409" \
 	-nf "#ffffff" \
 	-sb "#f2f2f2" \
