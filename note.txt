@@ -1,0 +1,14 @@
+For setting urxvt as main
+
+~/.local/share/applications/lf.desktop
+
+[Desktop Entry]
+Type=Application
+Name=lf
+Exec=urxvtc -e lf %u
+Icon=utilities-terminal
+Terminal=false
+MimeType=inode/directory;
+
+
+update-desktop-database ~/.local/share/applications
