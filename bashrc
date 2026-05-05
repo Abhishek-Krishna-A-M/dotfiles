@@ -51,6 +51,7 @@ alias grep='grep --color=auto'
 alias vi='vim'
 alias nv='nvim'
 alias clock='tty-clock -sctC 7 -f "%A, %B %d, %Y"'
+alias fetch='~/scripts/fetch.sh'
 # Git Aliases
 alias gs='git status'
 alias ga='git add'
@@ -67,7 +68,7 @@ export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export EDITOR="nvim"
-export TERMINAL="st"
+export TERMINAL=urxvtc
 export PATH="/home/ak/.bun/bin:$PATH"
 
 # Add paths only if they exist
