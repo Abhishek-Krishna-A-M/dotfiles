@@ -51,7 +51,7 @@ fi
 
 # 4. EXECUTION
 # Using setsid and & to fully detach from the dmenu process
-(setsid waterfox "$TARGET" &) > /dev/null 2>&1
+(setsid ubrowser "$TARGET" &) > /dev/null 2>&1
 exit 0
 
 exit 0

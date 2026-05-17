@@ -4,13 +4,8 @@
 SCRIPT="$HOME/.config/custom_scripts/actions.sh"
 
 # 1. Get the list and capture the user choice 
-# Using your exact Catppuccin-inspired colors [cite: 1, 2]
-choice=$("$SCRIPT" | dmenu -c -l 1 -p "󰖟 Search:" \
-	-nb "#000409" \
-	-nf "#ffffff" \
-	-sb "#f2f2f2" \
-	-sf "#000409" \
-    -fn "FiraCode Nerd Font:size=10")
+choice=$("$SCRIPT" | rofi -dmenu -nowm -i -p "󰖟 Search:" \
+    -theme-str "listview { lines: 1; spacing: 0px; } window { width: 32%; }")
 
 # 2. If the user didn't hit Escape, pass the choice back to the script 
 if [ -n "$choice" ]; then
