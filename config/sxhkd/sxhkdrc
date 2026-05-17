@@ -15,11 +15,11 @@ super + alt + Return
 
 # Application Launcher (Replaces j4-dmenu-desktop)
 super + r
-    rofi -nowm -show drun -p "Apps:"
+    rofi -nowm -show drun -display-drun "󰀻 Apps:"
 
 # Command Runner (Replaces dmenu_run)
 super + shift + r
-    rofi -nowm -show run -p "Run:"
+    rofi -nowm -show run -display-run " Run:"
 
 
 # Find files relative to home, explicitly allowing hidden config directories

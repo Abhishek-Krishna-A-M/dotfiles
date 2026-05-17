@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
 # Optimized Power Menu for 4GB RAM
 
-options="Lock\nLogout\nReboot\nPower Off\nSleep"
+options=" Lock\n󰍃 Logout\n Reboot\n󰐥 Power Off\n󰒲 Sleep"
 
 # Custom Rofi styling to match your Artix Mountain theme
-chosen=$(echo -e "$options" | rofi -dmenu -nowm -i -p "System:" \
+chosen=$(echo -e "$options" | rofi -dmenu -nowm -i -p " System:" \
    -theme-str "listview { lines: 5; } window { width: 25%; }")
 
 case "$chosen" in
-    "Lock")      
+    " Lock")      
         ~/.config/custom_scripts/lock.sh ;;
-    "Logout")    
+    "󰍃 Logout")    
         bspc quit ;;
-    "Reboot")    
+    " Reboot")    
         loginctl reboot ;;
-    "Power Off") 
+    "󰐥 Power Off") 
         loginctl poweroff ;;
-    "Sleep")     
+    "󰒲 Sleep")     
         # Lock, wait a tiny bit, kill the display signal, then suspend
         ~/.config/custom_scripts/lock.sh & 
         sleep 0.5 && xset dpms force off && loginctl suspend ;;
