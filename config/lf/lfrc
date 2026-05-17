@@ -11,7 +11,9 @@ map l open
 map h updir
 map k up
 map j down
-cmd terminal &st
+
+# Fixed: Swap st for urxvtc client daemon to save RAM
+cmd terminal &urxvtc
 
 cmd edit-node ${{
     if [ -d "$f" ]; then
@@ -45,9 +47,12 @@ cmd open ${{
         esac
     fi
 }}
+
 # ===== Fuzzy Search (Jump to File) =====
+# FIX: Swapped 'bat' for standard 'cat' so it never fails.
+# If you decide to install bat, change 'cat' back to 'bat --color=always --style=numbers --line-range=:500 {}'
 cmd fzf_jump ${{
-    res="$(find . -maxdepth 3 | fzf --reverse --header='Jump to file' --preview 'bat --color=always --style=numbers --line-range=:500 {}')"
+    res="$(find . -maxdepth 3 | fzf --reverse --header='Jump to file' --preview 'cat {}')"
     if [ -n "$res" ]; then
         if [ -d "$res" ]; then
             lf -remote "send $id cd \"$res\""
@@ -64,10 +69,12 @@ map y copy
 map p paste
 map m rename
 map x cut
-map Y shell echo -n "$f" | xclip -selection clipboard
-# New Browser Bind
-map B &ubrowser "file://$f"
+
 # Clipboard & Terminal
 map Y &echo -n "$f" | xclip -selection clipboard
+
+# New Browser Bind
+map B &ubrowser "file://$f"
+
 # Match st colors: Directories in Steel Blue, Executables in Sage Green
 set colors 'di=34:ex=32:ln=36:pi=33:so=35:bd=33:cd=33:su=31:sg=31:tw=32:ow=34'
