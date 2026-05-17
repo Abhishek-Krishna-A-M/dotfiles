@@ -7,14 +7,14 @@ SEL_BG="#000000"
 SEL_FG="#ffffff"  
 
 # Custom Rofi styling for the 3-option display selector (Fixed flag)
-chosen=$(printf "Mirror\nExtend\nReset" | rofi -dmenu -nowm -i -p "Display:" \
+chosen=$(printf "󰹑 Mirror\n󰍺 Extend\n󰑓 Reset" | rofi -dmenu -nowm -i -p "󰍹 Display:" \
     -theme-str "listview { lines: 3; } window { width: 20%; }")
 
 
 case "$chosen" in
-    Mirror)  bash ~/.config/bspwm/scripts/mirror.sh ;;
-    Extend)  bash ~/.config/bspwm/scripts/extend.sh ;;
-    Reset)
+    󰹑 Mirror)  bash ~/.config/bspwm/scripts/mirror.sh ;;
+    󰍺 Extend)  bash ~/.config/bspwm/scripts/extend.sh ;;
+    󰑓 Reset)
         # Re-enable laptop screen FIRST to prevent X11 crash/TTY dump
         xrandr --output eDP-1 --auto --primary
         sleep 1
