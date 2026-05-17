@@ -22,12 +22,14 @@ super + shift + r
     rofi -nowm -show run -p "Run:"
 
 
-# Fuzzy find, edit, and keep terminal open in that directory
+# Find files relative to home, explicitly allowing hidden config directories
 super + alt + f
-	st -e sh -c 'file=$(fzf) && full_path=$(realpath "$file") && cd "$(dirname "$full_path")" && nvim "$full_path" && exec $SHELL'
+    file=$(cd ~ && fd --type f --hidden --follow --exclude .git --exclude .cache --exclude .local/share/ --exclude node_modules | rofi -dmenu -nowm -i -p "󰈞 Find File:") && \
+    [ -n "$file" ] && \
+    urxvtc -e env FILE="$HOME/$file" sh -c 'cd "$(dirname "$(realpath "$FILE")")" && nvim "$(realpath "$FILE")" && exec $SHELL'
 
 super + shift + f
-	st -e bash -i -c "lf; exec bash"
+	urxvtc -e bash -i -c "lf; exec bash"
 
 #open waterfox
 super + shift + b
