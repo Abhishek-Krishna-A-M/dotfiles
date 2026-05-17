@@ -181,6 +181,9 @@ super + alt + x
     ~/.config/custom_scripts/powermenu.sh
 
 #Display Mode
-super + space
+super + alt + space
 	~/.config/custom_scripts/hdmi.sh
 
+# Window Switcher
+super + space
+	rofi -nowm -show window -display-window "󱂬 Switch:" -theme-str 'window \{ width: 40%; \} listview \{ lines: 8; \}'

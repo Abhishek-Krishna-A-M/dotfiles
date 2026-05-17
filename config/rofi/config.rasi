@@ -3,7 +3,7 @@ configuration {
     modi: "drun,run";
     font: "FiraCode Nerd Font 10";
     show-icons: true;
-    terminal: "urxvt";
+    terminal: "urxvtc";
     
     /* Blazing Fast Matching Flags */
     case-sensitive: false;
@@ -17,6 +17,9 @@ configuration {
     kb-row-down: "Down,Control+n";
     kb-accept-entry: "Return,KP_Enter";
     kb-cancel: "Escape,Control+g";
+    /* Window Switcher Settings */
+    window-match-fields: "title,class";
+    window-format: "{w} · {c} · {t}";
 }
 
 @theme "/dev/null"
