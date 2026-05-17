@@ -40,7 +40,7 @@ cmd open ${{
                 nvim "$f"
                 ;;
             *)
-                waterfox "$f" >/dev/null 2>&1 &
+                ubrowser "$f" >/dev/null 2>&1 &
                 ;;
         esac
     fi
@@ -66,7 +66,7 @@ map m rename
 map x cut
 map Y shell echo -n "$f" | xclip -selection clipboard
 # New Browser Bind
-map B &waterfox "$f"
+map B &ubrowser "file://$f"
 # Clipboard & Terminal
 map Y &echo -n "$f" | xclip -selection clipboard
 # Match st colors: Directories in Steel Blue, Executables in Sage Green

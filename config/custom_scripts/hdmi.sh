@@ -6,12 +6,9 @@ FG="#1a1a1a"
 SEL_BG="#000000"  
 SEL_FG="#ffffff"  
 
-chosen=$(printf "Mirror\nExtend\nReset" | dmenu -c -i -l 3 -p "Display:" \
-	-nb "#000409" \
-	-nf "#ffffff" \
-	-sb "#f2f2f2" \
-	-sf "#000409" \
-    -fn "FiraCode Nerd Font:size=10")
+# Custom Rofi styling for the 3-option display selector (Fixed flag)
+chosen=$(printf "Mirror\nExtend\nReset" | rofi -dmenu -nowm -i -p "Display:" \
+    -theme-str "listview { lines: 3; } window { width: 20%; }")
 
 
 case "$chosen" in

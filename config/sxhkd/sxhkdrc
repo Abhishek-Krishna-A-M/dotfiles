@@ -13,13 +13,13 @@ super + Return
 super + alt + Return
 	uxterm
 
-# Application Launcher (Desktop Apps)
+# Application Launcher (Replaces j4-dmenu-desktop)
 super + r
-    j4-dmenu-desktop --dmenu='dmenu -c -i -l 10 -p "Apps:" -fn "FiraCode Nerd Font:size=10" -nb "#000409" -nf "#ffffff" -sb "#f2f2f2" -sf "#000409" -bw 2'
+    rofi -nowm -show drun -p "Apps:"
 
-# Command Runner (Raw Binaries/Scripts)
+# Command Runner (Replaces dmenu_run)
 super + shift + r
-    dmenu_run -c -i -l 10 -p "Run:" -fn "FiraCode Nerd Font:size=10" -nb "#000409" -nf "#ffffff" -sb "#f2f2f2" -sf "#000409" -bw 2
+    rofi -nowm -show run -p "Run:"
 
 
 # Fuzzy find, edit, and keep terminal open in that directory
@@ -31,7 +31,7 @@ super + shift + f
 
 #open waterfox
 super + shift + b
-	waterfox
+	ubrowser
 
 # Faster Action/Search Menu (dmenu version)
 super + alt + b

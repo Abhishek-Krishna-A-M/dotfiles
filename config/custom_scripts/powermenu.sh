@@ -3,13 +3,9 @@
 
 options="Lock\nLogout\nReboot\nPower Off\nSleep"
 
-# Custom dmenu styling to match your Misty White theme
-chosen=$(echo -e "$options" | dmenu -c -i -l 5 -p "System:" \
-	-nb "#000409" \
-	-nf "#ffffff" \
-	-sb "#f2f2f2" \
-	-sf "#000409" \
-    -fn "FiraCode Nerd Font:size=10")
+# Custom Rofi styling to match your Artix Mountain theme
+chosen=$(echo -e "$options" | rofi -dmenu -nowm -i -p "System:" \
+   -theme-str "listview { lines: 5; } window { width: 25%; }")
 
 case "$chosen" in
     "Lock")      

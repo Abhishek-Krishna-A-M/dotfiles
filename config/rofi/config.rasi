@@ -1,0 +1,89 @@
+configuration {
+    /* Performance Constraints */
+    modi: "drun,run";
+    font: "FiraCode Nerd Font 10";
+    show-icons: true;
+    terminal: "urxvt";
+    
+    /* Blazing Fast Matching Flags */
+    case-sensitive: false;
+    matching: "glob";
+    tokenize: false;
+    drun-match-fields: "name,exec";
+    drun-display-format: "{name}";
+
+    /* Vim-style Navigation Keybinds */
+    kb-row-up: "Up,Control+p";
+    kb-row-down: "Down,Control+n";
+    kb-accept-entry: "Return,KP_Enter";
+    kb-cancel: "Escape,Control+g";
+}
+
+@theme "/dev/null"
+
+* {
+    bg:      #000409E6;   /* Deep Slate Blue/Gray from the valley fog */
+    fg:      #ffffff;   /* Soft, muted ice-blue for unselected text */
+    sel-bg:  #ffffff;   /* Solid Artix Logo White for active selection */
+    sel-fg:  #000409;   /* Ultra dark blue-black text when selected */
+    
+    background-color: transparent;
+    text-color:       @fg;
+}
+
+window {
+    anchor:           center;
+    location:         center;
+    width:            32%; 
+    background-color: @bg;
+    
+    /* Crisp border inspired by the clean geometry of the Artix logo */
+    border:           2px;
+    border-color:     #ffffff; 
+    padding:          12px;
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+}
+
+inputbar {
+    spacing:    0px;
+    text-color: @fg;
+    padding:    4px 4px 12px 4px; /* Generous bottom padding to separate input */
+    children:   [ prompt, entry ];
+}
+
+prompt {
+    padding:    0px 8px 0px 0px;
+    text-color: #ffffff; /* Make the prompt match the crisp white logo */
+    font:       "FiraCode Nerd Font Bold 10";
+}
+
+entry {
+    text-color:        #ffffff;
+    placeholder:       "";
+}
+
+listview {
+    lines:        5; /* Strictly constrained to 10 lines */
+    columns:      1;
+    fixed-height: true;
+    scrollbar:    false;
+    spacing:      4px;
+}
+
+element {
+    padding: 6px;
+    border-radius: 0px; /* Sharp corners to match bspwm/suckless style */
+}
+
+element selected {
+    background-color: @sel-bg;
+    text-color:       @sel-fg;
+}
+
+element-text {
+    background-color: inherit;
+    text-color:       inherit;
+}
