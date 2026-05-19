@@ -1,0 +1,22 @@
+# Global configuration
+font=JetBrainsMono Nerd Font 10
+background-color=#000409ee
+text-color=#ffffff
+border-color=#1f6feb
+border-size=2
+border-radius=6
+
+# Layout
+width=320
+height=120
+margin=20
+padding=15
+
+# Behavior
+default-timeout=5000
+max-history=5
+
+# Custom rules for your live stats panel
+[app-name=sway-stats]
+border-color=#58a6ff
+default-timeout=0

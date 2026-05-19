@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Safely extract and format all open windows from Sway's JSON layout tree
+selection=$(swaymsg -t get_tree | jq -r '
+  recurse(.nodes[], .floating_nodes[]) 
+  | select(.name? and .shell?) 
+  | "[\(.app_id // .window_properties.class // "Unknown")] \(.name) | id=\(.id)"' \
+  | fuzzel --dmenu --prompt="❯ Switch to: " --lines=10 --width=60)
+
+# Extract container ID and pass focus back to Sway if a selection exists
+[ -n "$selection" ] && {
+    id=$(echo "$selection" | awk -F 'id=' '{print $2}')
+    swaymsg "[con_id=$id] focus"
+}
