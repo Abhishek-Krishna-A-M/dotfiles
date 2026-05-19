@@ -84,7 +84,7 @@ case "${_wm,,}" in
     bspwm)      WM_ICON="󰕮" ;; i3|i3wm)   WM_ICON="󰕴" ;;
     openbox)    WM_ICON="󰆾" ;; xfce*)     WM_ICON="󰣙" ;;
     gnome)      WM_ICON="󰣇" ;; plasma)    WM_ICON="󰣚" ;;
-    hyprland)   WM_ICON="󱣴" ;; sway)      WM_ICON="󰀆" ;;
+    hyprland)   WM_ICON="󱣴" ;; sway)      WM_ICON="󰖲" ;;
     dwm)        WM_ICON="󰕲" ;; awesome)   WM_ICON="󰕰" ;;
     *)          WM_ICON="󰖲" ;;
 esac
