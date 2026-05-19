@@ -43,6 +43,11 @@ exec foot --server
 exec mako
 # Network manager tray icon
 exec nm-applet --indicator
+# Sound
+exec pipewire
+exec pipewire-pulse
+exec wireplumber
+
 
 # Idle: lock at 5 min, blank screen at 10 min, lock before sleep
 exec swayidle -w \
