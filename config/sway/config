@@ -1,7 +1,7 @@
 ### ════════════════════════════════════════════════════════════════════════════
 ### ~/.config/sway/config
 ### Converted from bspwm + sxhkd  |  Optimised for i3-5th-gen / 4 GB RAM
-### Tools: waybar · fuzzel · foot · grim · slurp · swaybg · swaylock · dunst
+### Tools: waybar · rofi · foot · grim · slurp · swaybg · swaylock · dunst
 ### ════════════════════════════════════════════════════════════════════════════
 
 ### ── VARIABLES ───────────────────────────────────────────────────────────────
@@ -30,10 +30,18 @@ set $lock  swaylock --daemonize \
                --time-str "%I:%M %p"
 
 ### ── WAYLAND / XDG ENVIRONMENT ─────────────────────────────────────────────
-# Required for xdg-desktop-portal (screen share, file picker), GTK, Electron
-exec dbus-update-activation-environment --systemd \
-    WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway DISPLAY MOZ_ENABLE_WAYLAND=1
+exec dbus-update-activation-environment \
+    DISPLAY \
+    WAYLAND_DISPLAY \
+    SWAYSOCK \
+    XDG_CURRENT_DESKTOP=sway \
+    XDG_SESSION_TYPE=wayland \
+    MOZ_ENABLE_WAYLAND=1
 
+exec ~/.config/sway/start-audio.sh
+
+exec /usr/lib/xdg-desktop-portal-wlr -r
+exec /usr/lib/xdg-desktop-portal -r
 ### ── AUTOSTART ───────────────────────────────────────────────────────────────
 
 # Foot server — footclient spawns in ~5 ms against this instead of ~60 ms cold
@@ -43,11 +51,6 @@ exec foot --server
 exec mako
 # Network manager tray icon
 exec nm-applet --indicator
-# Sound
-exec pipewire
-exec pipewire-pulse
-exec wireplumber
-
 
 # Idle: lock at 5 min, blank screen at 10 min, lock before sleep
 exec swayidle -w \
@@ -85,7 +88,7 @@ input "type:touchpad" {
 # Mouse — flat profile, matches your: xinput accel -1
 input "type:pointer" {
     accel_profile  flat
-    pointer_accel  0.0
+    pointer_accel  0.7
 }
 
 ### ── FOCUS BEHAVIOR ─────────────────────────────────────────────────────────
@@ -101,9 +104,9 @@ workspace_auto_back_and_forth yes
 ### ── APPEARANCE ─────────────────────────────────────────────────────────────
 
 # No titlebars — bspwm has none
-font pango:FiraCode Nerd Font 1
+font pango:FiraCode Nerd Font 7
 title_align center
-default_border         pixel 2
+default_border         pixel 1
 default_floating_border pixel 2
 
 # Hide border on the side touching the screen edge (bspwm: borderless when 1 window)
@@ -118,11 +121,11 @@ smart_gaps   on
 smart_borders on
 
 # Window border colours — from your bspwm palette
-# class                  border    bg        text      indicator  child_border
-client.focused           #e2e2e2   #e2e2e2   #1e1e2e   #e2e2e2    #e2e2e2
-client.focused_inactive  #a2a2a2   #a2a2a2   #888888   #a2a2a2    #a2a2a2
-client.unfocused         #a2a2a2   #333333   #888888   #a2a2a2    #a2a2a2
-client.urgent            #cc0000   #cc0000   #ffffff   #cc0000    #cc0000
+# class                 border  bg      text    indicator child_border
+client.focused          #000409 #000409 #ffffff #000409    #000b1a
+client.focused_inactive #000409 #000409 #888888 #000409    #000409
+client.unfocused        #000409 #000409 #555555 #000409    #000409
+client.urgent           #cc0000 #cc0000 #ffffff #cc0000    #cc0000
 
 ### ── STATUS BAR ─────────────────────────────────────────────────────────────
 # Using the bar subcommand so waybar restarts automatically on `swaymsg reload`.
@@ -174,18 +177,15 @@ bindsym $mod+$alt+Return    exec $term
 
 ## ── Launchers ─────────────────────────────────────────────────────────────
 # bspwm: super+r → rofi -show drun
-bindsym $mod+r          exec fuzzel
+bindsym $mod+r          exec rofi -nowm -show drun -display-drun "󰀻 Apps:"
 
 # bspwm: super+shift+r → rofi -show run
-bindsym $mod+Shift+r    exec fuzzel --dmenu --prompt=" Run: "
+bindsym $mod+Shift+r    exec rofi -nowm -show run -display-run " Run:"
 
 ## ── File finder (fd + fuzzel + nvim inside foot) ─────────────────────────
-bindsym $mod+$alt+f exec sh -c \
-    'f=$(fd --type f --hidden --follow \
-        --exclude .git --exclude .cache \
-        --exclude ".local/share" --exclude node_modules \
-        . "$HOME" | fuzzel --dmenu --prompt="❯ Find File: "); \
-     [ -n "$f" ] && exec $term -e nvim "$f"'
+bindsym $mod+$alt+f exec file=$(cd ~ && fd --type f --hidden --follow --exclude .git --exclude .cache --exclude .local/share/ --exclude node_modules | rofi -dmenu -nowm -i -p "󰈞 Find File:") && \
+    [ -n "$file" ] && \
+    foot -e env FILE="$HOME/$file" sh -c 'cd "$(dirname "$(realpath "$FILE")")" && nvim "$(realpath "$FILE")" && exec $SHELL'
 
 ## ── File Manager ──────────────────────────────────────────────────────────
 # bspwm: super+shift+f → urxvtc -e lf
@@ -309,7 +309,7 @@ bindsym --locked XF86MonBrightnessDown exec brightnessctl set 10%-
 
 ## extras
 # Fast window switcher
-bindsym $mod+space exec ~/.local/bin/sway-window-switcher
+bindsym $mod+space exec rofi -nowm -show window -display-window "󱂬 Switch:" -theme-str 'window { width: 40%; } listview { lines: 8; }'
 
 ### ── WINDOW RULES ───────────────────────────────────────────────────────────
 
