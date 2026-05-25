@@ -1,0 +1,8 @@
+[screencast]
+max_fps=60
+chooser_type=dmenu
+chooser_cmd=rofi -dmenu -p "󱂬 Share Target:" -theme-str 'window { width: 50%; } listview { lines: 2; }'
+
+[screenshot]
+chooser_type=simple
+chooser_cmd=slurp -f %o -or
