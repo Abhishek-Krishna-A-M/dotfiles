@@ -7,27 +7,13 @@
 ### ── VARIABLES ───────────────────────────────────────────────────────────────
 set $mod   Mod4
 set $alt   Mod1
-set $term  footclient
-set $ws1 "「 1 」"
-set $ws2 "「 2 」"
-set $ws3 "「 3 」"
-set $ws4 "「 4 」"
-set $ws5 "「 5 」"
-# Swaylock with your Catppuccin Mocha palette (same as i3lock config)
-set $lock  swaylock --daemonize \
-               --indicator --clock \
-               --color 1e1e2e \
-               --ring-color 89b4fa \
-               --line-color 00000000 \
-               --keyhl-color f38ba8 \
-               --bshl-color f38ba8 \
-               --separator-color 00000000 \
-               --time-color 89b4faff \
-               --date-color 89b4faff \
-               --time-font "FiraCode Nerd Font" \
-               --date-font "FiraCode Nerd Font" \
-               --date-str "%a %b %d" \
-               --time-str "%I:%M %p"
+set $term  footclient --app-id foot-float
+set $ws1 "1:「 1 」"
+set $ws2 "2:「 2 」"
+set $ws3 "3:「 3 」"
+set $ws4 "4:「 4 」"
+set $ws5 "5:「 5 」"
+set $lock  swaylock
 
 ### ── WAYLAND / XDG ENVIRONMENT ─────────────────────────────────────────────
 exec dbus-update-activation-environment \
@@ -137,6 +123,7 @@ bar {
     font pango:JetBrainsMono Nerd Font 10
    # Hide the native sway workspace buttons and title if they are active
     workspace_buttons yes
+    strip_workspace_numbers yes
     # binding_mode_indicator no 
     colors {
         background #000409
@@ -315,7 +302,7 @@ bindsym $mod+space exec rofi -nowm -show window -display-window "󱂬 Switch:" -
 
 # Floating scratch terminal — matches your URxvt/St rules (800×600, centered).
 # Launch with:  footclient --app-id foot-float
-for_window [app_id="foot"] \
+for_window [app_id="foot-float"] \
     floating enable, resize set 800 600, move position center
 
 # nm-applet connection editor pops up floating
