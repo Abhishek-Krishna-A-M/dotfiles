@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>History — UBrowser</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0a0a0a;
+    --bg1:      #111111;
+    --bg2:      #161616;
+    --border:   #252525;
+    --border2:  #333333;
+    --fg:       #c8c8c8;
+    --fg-dim:   #555555;
+    --fg-mid:   #888888;
+    --accent:   #ffffff;
+    --hover-bg: #141414;
+    --focus-bg: #1a1a1a;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Header bar ── */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border2);
+    padding: 1.2rem 2rem 1rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+  }
+
+  .topbar h1 {
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: lowercase;
+    white-space: nowrap;
+  }
+
+  .count {
+    font-size: 0.65rem;
+    color: var(--fg-dim);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── Search ── */
+  .search-wrap {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  #search {
+    width: 100%;
+    max-width: 340px;
+    background: var(--bg1);
+    color: var(--fg);
+    border: 1px solid var(--border2);
+    font-family: inherit;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+    outline: none;
+    caret-color: var(--accent);
+    transition: border-color 0.1s;
+  }
+
+  #search::placeholder { color: var(--fg-dim); }
+  #search:focus { border-color: var(--fg-mid); }
+
+  /* ── Column headers ── */
+  .col-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    padding: 0.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--fg-dim);
+  }
+
+  .col-header-right {
+    display: flex;
+    gap: 3rem;
+    text-align: right;
+  }
+
+  /* ── List ── */
+  #list {
+    list-style: none;
+    flex: 1;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 0.6rem 2rem;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    gap: 1.5rem;
+    transition: background 0.08s;
+  }
+
+  .item:hover  { background: var(--hover-bg); }
+  .item:focus  { background: var(--focus-bg); outline: none; border-color: var(--border2); }
+
+  .item-left {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .item-title {
+    color: var(--fg);
+    font-size: 0.78rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .item-url {
+    color: var(--fg-dim);
+    font-size: 0.68rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .item-meta {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .visits {
+    font-size: 0.65rem;
+    color: var(--fg-dim);
+    min-width: 2.5em;
+    text-align: right;
+  }
+
+  .ts {
+    font-size: 0.65rem;
+    color: var(--fg-dim);
+    min-width: 10em;
+    text-align: right;
+  }
+
+  /* ── Empty state ── */
+  .empty {
+    text-align: center;
+    padding: 6rem 2rem;
+    color: var(--fg-dim);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── Hint bar ── */
+  .hintbar {
+    position: sticky;
+    bottom: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 0.4rem 2rem;
+    font-size: 0.6rem;
+    color: var(--fg-dim);
+    letter-spacing: 0.08em;
+  }
+
+  .hintbar kbd {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    color: var(--fg-mid);
+    font-family: inherit;
+    font-size: 0.6rem;
+    padding: 0 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>ubrowser / history</h1>
+  <span class="count" id="count">17 entries</span>
+  <div class="search-wrap">
+    <input type="text" id="search" placeholder="filter..." autofocus autocomplete="off" spellcheck="false">
+  </div>
+</div>
+
+<div class="col-header">
+  <span>page</span>
+  <div class="col-header-right">
+    <span>visits</span>
+    <span>last visited</span>
+  </div>
+</div>
+
+<ul id="list">
+<li class="item" tabindex="0" data-url="file:///home/ak/.config/custom_scripts/startpage/home.html">
+                     <span class="item-title">AK</span>
+                     <span class="item-url">file:///home/ak/.config/custom_scripts/startpage/home.html</span>
+                     <span class="item-meta"><span class="visits">9×</span><span class="ts">2026-05-11 18:00</span></span>
+                   </li><li class="item" tabindex="0" data-url="https://www.webernyx.in/services.html">
+                     <span class="item-title">Services | Webernyx Web Solutions</span>
+                     <span class="item-url">https://www.webernyx.in/services.html</span>
+                     <span class="item-meta"><span class="visits">1×</span><span class="ts">2026-05-11 17:59</span></span>
+                   </li><li class="item" tabindex="0" data-url="https://www.webernyx.in/">
+                     <span class="item-title">Webernyx Web Solutions | Premium Software Engineering Studio</span>
+                     <span class="item-url">https://www.webernyx.in/</span>
+                     <span class="item-meta"><span class="visits">5×</span><span class="ts">2026-05-11 17:59</span></span>
+                   </li><li class="item" tabindex="0" data-url="https://www.bing.com/ck/a?!&amp;&amp;p=c714e6b356f62a4f9624b372f41a201a0792b11266df223ded9af7afb0420742JmltdHM9MTc3ODQ1NzYwMA&amp;ptn=3&amp;ver=2&amp;hsh=4&amp;fclid=0356a4e5-a688-680a-3010-b3b3a7176903&amp;u=a1aHR0cHM6Ly93d3cud2ViZXJueXguaW4v&amp;ntb=1">
+                     <span class="item-title">https://www.bing.com/ck/a?!&amp;&amp;p=c714e6b356f62a4f9624b372f41a201a0792b11266df223ded9af7afb0420742JmltdHM9MTc3ODQ1NzYwMA&amp;ptn=3&amp;ver=2&amp;hsh=4&amp;fclid=0356a4e5-a688-680a-3010-b3b3a7176903&amp;u=a1aHR0cHM6Ly93d3cud2ViZXJueXguaW4v&amp;ntb=1</span>
+                     <span class="item-url">https://www.bing.com/ck/a?!&amp;&amp;p=c714e6b356f62a4f9624b372f41a201a0792b11266df223ded9af7afb0420742JmltdHM9MTc3ODQ1NzYwMA&amp;ptn=3&amp;ver=2&amp;hsh=4&amp;fclid=0356a4e5-a688-680a-3010-b3b3a7176903&amp;u=a1aHR0cHM6Ly93d3cud2ViZXJueXguaW4v&amp;ntb=1</span>
+                     <span class="item-meta"><span class="visits">3×</span><span class="ts">2026-05-11 17:57</span></span>
+                   </li><li class="item" tabindex="0" data-url="">
+                     <span class="item-title"></span>
+                     <span class="item-url"></span>
+                     <span class="item-meta"><span class="visits">1×</span><span class="ts">2026-05-11 17:57</span></span>
+                   </li><li class="item" tabindex="0" data-url="https://webanixsolutions.com/">
+                     <span class="item-title">Webanix Solutions | IT Solutions and Consulting Services</span>
+                     <span class="item-url">https://webanixsolutions.com/</span>
+                     <span class="item-meta"><span class="visits">1×</span><span class="ts">2026-05-11 17:57</span></span>
+                   </li><li class="item" tabindex="0" data-url="https://www.bing.com/ck/a?!&amp;&amp;p=86517410d659016be2ee2b7af43f3e509c33bea4f4d49464ef46058c0e60222eJmltdHM9MTc3ODQ1NzYwMA&amp;ptn=3&amp;ver=2&amp;hsh=4&amp;fclid=0356a4e5-a688-680a-3010-b3b3a7176903&amp;u=a1aHR0cHM6Ly93ZWJhbml4c29sdXRpb25zLmNvbS8&amp;ntb=1">
+                     <span class="item-title">https://www.bing.com/ck/a?!&amp;&amp;p=86517410d659016be2ee2b7af43f3e509c33bea4f4d49464ef46058c0e60222eJmltdHM9MTc3ODQ1NzYwMA&amp;ptn=3&amp;ver=2&amp;hsh=4&amp;fclid=0356a4e5-a688-680a-3010-b3b3a7176903&amp;u=a1aHR0cHM6Ly93ZWJhbml4c29sdXRpb25zLmNvbS8&amp;ntb=1</span>
+                     <span class="item-url">https://www.bing.com/ck/a?!&amp;&amp;p=86517410d659016be2ee2b7af43f3e509c33bea4f4d49464ef46058c0e60222eJmltdHM9MTc3ODQ1NzYwMA&amp;ptn=3&amp;ver=2&amp;hsh=4&amp;fclid=0356a4e5-a688-680a-3010-b3b3a7176903&amp;u=a1aHR0cHM6Ly93ZWJhbml4c29sdXRpb25zLmNvbS8&amp;ntb=1</span>
+                     <span class="item-meta"><span class="visits">1×</span><span class="ts">2026-05-11 17:57</span></span>
+                   </li><li class="item" tabindex="0" data-url="https://www.bing.com/search?q=webernyx%20software%20solutions">
+                     <span class="item-title">webernyx software solutions - Search</span>
+                     <span class="item-url">https://www.bing.com/search?q=webernyx%20software%20solutions</span>
+                     <span class="item-meta"><span class="visits">1×</span><span class="ts">2026-05-11 17:57</span></span>
+                   </li><li class="item" tabindex="0" data-url="https://www.google.com/search?q=webernyx+software+solutions&amp;sca_esv=43a6c5a008a39361&amp;ei=PhgCasOhFKaUseMP_PSzwAg&amp;biw=1354&amp;bih=705&amp;ved=0ahUKEwjDuLSz57GUAxUmSmwGHXz6DIgQ4dUDCBE&amp;uact=5&amp;oq=webernyx+software+solutions&amp;gs_lp=Egxnd3Mtd2l6LXNlcnAiG3dlYmVybnl4IHNvZnR3YXJlIHNvbHV0aW9uczIFECEYoAEyBRAhGKABSPJNUKsFWKBLcAF4AZABAJgB3AGgAekNqgEFNy43LjG4AQPIAQD4AQGYAhCgAogQwgIKEAAYRxjWBBiwA8ICDRAAGIAEGIoFGEMYsAPCAg4QABjkAhjWBBiwA9gBAcICFxAuGNwGGLgGGNoGGNgCGMgDGLAD2AEBwgIXEC4Y2AIYuAYY2gYY3AYYyAMYsAPYAQHCAgoQABiABBgNGLEDwgINEAAYgAQYDRixAxiDAcICBxAAGIAEGA3CAgcQLhiABBgNwgIHEC4YDRiABMICBhAAGB4YDcICBxAhGAoYoAHCAggQABgIGB4YDcICChAAGAgYHhgNGArCAgsQABiABBiKBRiGA8ICCBAAGIAEGKIEwgIIEAAYiQUYogTCAgUQABjvBZgDAOIDBRIBMSBAiAYBkAYQugYGCAEQARgJkgcGMy4xMi4xoAf_TbIHBjIuMTIuMbgH3w_CBwcyLTguMy41yAfIAYAIAQ&amp;sclient=gws-wiz-serp">
+                     <span class="item-title">webernyx software solutions - Google Search</span>
+                     <span class="item-url">https://www.google.com/search?q=webernyx+software+solutions&amp;sca_esv=43a6c5a008a39361&amp;ei=PhgCasOhFKaUseMP_PSzwAg&amp;biw=1354&amp;bih=705&amp;ved=0ahUKEwjDuLSz57GUAxUmSmwGHXz6DIgQ4dUDCBE&amp;uact=5&amp;oq=webernyx+software+solutions&amp;gs_lp=Egxnd3Mtd2l6LXNlcnAiG3dlYmVybnl4IHNvZnR3YXJlIHNvbHV0aW9uczIFECEYoAEyBRAhGKABSPJNUKsFWKBLcAF4AZABAJgB3AGgAekNqgEFNy43LjG4AQPIAQD4AQGYAhCgAogQwgIKEAAYRxjWBBiwA8ICDRAAGIAEGIoFGEMYsAPCAg4QABjkAhjWBBiwA9gBAcICFxAuGNwGGLgGGNoGGNgCGMgDGLAD2AEBwgIXEC4Y2AIYuAYY2gYY3AYYyAMYsAPYAQHCAgoQABiABBgNGLEDwgINEAAYgAQYDRixAxiDAcICBxAAGIAEGA3CAgcQLhiABBgNwgIHEC4YDRiABMICBhAAGB4YDcICBxAhGAoYoAHCAggQABgIGB4YDcICChAAGAgYHhgNGArCAgsQABiABBiKBRiGA8ICCBAAGIAEGKIEwgIIEAAYiQUYogTCAgUQABjvBZgDAOIDBRIBMSBAiAYBkAYQugYGCAEQARgJkgcGMy4xMi4xoAf_TbIHBjIuMTIuMbgH3w_CBwcyLTguMy41yAfIAYAIAQ&amp;sclient=gws-wiz-serp</span>
+                     <span class="item-meta"><span class="visits">1×</span><span class="ts">2026-05-11 17:56</span></span>
+                   </li><li class="item" tabindex="0" data-url="https://www.google.com/search?q=webernyx&amp;sei=LhgCapDVKs-84-EPmZ7K6Ag">
+                     <span class="item-title">webernyx - Google Search</span>
+                     <span class="item-url">https://www.google.com/search?q=webernyx&amp;sei=LhgCapDVKs-84-EPmZ7K6Ag</span>
+                     <span class="item-meta"><span class="visits">1×</span><span class="ts">2026-05-11 17:56</span></span>
+                   </li><li class="item" tabindex="0" data-url="https://www.google.com/sorry/index?continue=https://www.google.com/search%3Fq%3Dwebernyx%26sei%3DLhgCapDVKs-84-EPmZ7K6Ag&amp;q=EgQr5VpjGK-wiNAGIjDg2OMffJK0OcMGIfTYYa24QDr1Dripm5vbM7CTDWgNaC_8AYVwYFnzAzU5CiArzDcyAVJaAUM">
+                     <span class="item-title">https://www.google.com/search?q=webernyx&amp;sei=LhgCapDVKs-84-EPmZ7K6Ag</span>
+                     <span class="item-url">https://www.google.com/sorry/index?continue=https://www.google.com/search%3Fq%3Dwebernyx%26sei%3DLhgCapDVKs-84-EPmZ7K6Ag&amp;q=EgQr5VpjGK-wiNAGIjDg2OMffJK0OcMGIfTYYa24QDr1Dripm5vbM7CTDWgNaC_8AYVwYFnzAzU5CiArzDcyAVJaAUM</span>
+                     <span class="item-meta"><span class="visits">1×</span><span class="ts">2026-05-11 17:55</span></span>
+                   </li><li class="item" tabindex="0" data-url="https://www.google.com/search?q=webernyx">
+                     <span class="item-title">https://www.google.com/search?q=webernyx</span>
+                     <span class="item-url">https://www.google.com/search?q=webernyx</span>
+                     <span class="item-meta"><span class="visits">1×</span><span class="ts">2026-05-11 17:55</span></span>
+                   </li><li class="item" tabindex="0" data-url="https://archlinux.org/packages/?sort=&amp;q=linux&amp;maintainer=&amp;flagged=">
+                     <span class="item-title">Arch Linux - Package Search</span>
+                     <span class="item-url">https://archlinux.org/packages/?sort=&amp;q=linux&amp;maintainer=&amp;flagged=</span>
+                     <span class="item-meta"><span class="visits">1×</span><span class="ts">2026-05-11 17:55</span></span>
+                   </li><li class="item" tabindex="0" data-url="https://archlinux.org/packages/">
+                     <span class="item-title">Arch Linux - Package Search</span>
+                     <span class="item-url">https://archlinux.org/packages/</span>
+                     <span class="item-meta"><span class="visits">1×</span><span class="ts">2026-05-11 17:55</span></span>
+                   </li><li class="item" tabindex="0" data-url="https://wiki.archlinux.org/title/Main_page">
+                     <span class="item-title">ArchWiki</span>
+                     <span class="item-url">https://wiki.archlinux.org/title/Main_page</span>
+                     <span class="item-meta"><span class="visits">1×</span><span class="ts">2026-05-11 17:54</span></span>
+                   </li><li class="item" tabindex="0" data-url="file:///home/ak/.config/ubrowser/history.html">
+                     <span class="item-title">file:///home/ak/.config/ubrowser/history.html</span>
+                     <span class="item-url">file:///home/ak/.config/ubrowser/history.html</span>
+                     <span class="item-meta"><span class="visits">1×</span><span class="ts">2026-05-11 17:46</span></span>
+                   </li><li class="item" tabindex="0" data-url="file:///home/ak/.config/ubrowser/homepage.html">
+                     <span class="item-title">file:///home/ak/.config/ubrowser/homepage.html</span>
+                     <span class="item-url">file:///home/ak/.config/ubrowser/homepage.html</span>
+                     <span class="item-meta"><span class="visits">1×</span><span class="ts">2026-05-11 17:46</span></span>
+                   </li>
+</ul>
+
+<div class="empty" id="empty" style="display:none">no matches</div>
+
+<div class="hintbar">
+  <kbd>↑</kbd><kbd>↓</kbd> navigate &nbsp;·&nbsp;
+  <kbd>Enter</kbd> open &nbsp;·&nbsp;
+  <kbd>/</kbd> or start typing to filter
+</div>
+
+<script>
+  const search  = document.getElementById('search');
+  const list    = document.getElementById('list');
+  const empty   = document.getElementById('empty');
+  const counter = document.getElementById('count');
+  const items   = Array.from(list.querySelectorAll('.item'));
+
+  // Wrap title+url into a left div for grid layout
+  items.forEach(li => {
+    const title = li.querySelector('.item-title');
+    const url   = li.querySelector('.item-url');
+    const meta  = li.querySelector('.item-meta');
+    const left  = document.createElement('div');
+    left.className = 'item-left';
+    left.appendChild(title);
+    left.appendChild(url);
+    li.insertBefore(left, meta);
+  });
+
+  function filter(q) {
+    const lower = q.toLowerCase();
+    let visible = 0;
+    items.forEach(item => {
+      const text  = item.textContent.toLowerCase();
+      const show  = !lower || text.includes(lower);
+      item.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    empty.style.display  = visible === 0 ? 'block' : 'none';
+    counter.textContent  = visible + ' entries';
+  }
+
+  search.addEventListener('input', e => filter(e.target.value));
+
+  // Open on click
+  list.addEventListener('click', e => {
+    const li = e.target.closest('.item');
+    if (li) window.location.href = li.dataset.url;
+  });
+
+  // Keyboard nav
+  function visibleItems() {
+    return items.filter(i => i.style.display !== 'none');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && document.activeElement.classList.contains('item')) {
+      window.location.href = document.activeElement.dataset.url;
+      return;
+    }
+
+    if (e.key === 'ArrowDown' || (e.key === 'j' && document.activeElement !== search)) {
+      e.preventDefault();
+      const vis = visibleItems();
+      if (document.activeElement === search) {
+        vis[0]?.focus();
+      } else {
+        const idx = vis.indexOf(document.activeElement);
+        vis[idx + 1]?.focus();
+      }
+      return;
+    }
+
+    if (e.key === 'ArrowUp' || (e.key === 'k' && document.activeElement !== search)) {
+      e.preventDefault();
+      const vis = visibleItems();
+      const idx = vis.indexOf(document.activeElement);
+      if (idx <= 0) search.focus();
+      else vis[idx - 1]?.focus();
+      return;
+    }
+
+    // Jump to search with /
+    if (e.key === '/' && document.activeElement !== search) {
+      e.preventDefault();
+      search.focus();
+    }
+  });
+</script>
+</body>
+</html>

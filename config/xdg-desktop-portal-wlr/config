@@ -1,7 +1,7 @@
 [screencast]
 max_fps=60
 chooser_type=dmenu
-chooser_cmd=rofi -dmenu -p "󱂬 Share Target:" -theme-str 'window { width: 50%; } listview { lines: 2; }'
+chooser_cmd=fuzzel --config ~/.config/fuzzel/window.ini --dmenu --prompt="󱂬 Share Target: "
 
 [screenshot]
 chooser_type=simple

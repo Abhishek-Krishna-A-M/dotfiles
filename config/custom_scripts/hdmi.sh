@@ -1,29 +1,45 @@
 #!/usr/bin/env bash
 
-# Misty White Theme for dmenu/scripts
-BG="#f2f2f2"     
-FG="#1a1a1a"     
-SEL_BG="#000000"  
-SEL_FG="#ffffff"  
+# ═════════════════════════════════════════════════════════════════════════════
+# ~/.config/custom_scripts/hdmi.sh
+# Native Wayland Display Switcher for UWM + Fuzzel
+# Uses wlr-randr for output management (works with uwm's output management protocol)
+# ═════════════════════════════════════════════════════════════════════════════
 
-# Custom Rofi styling for the 3-option display selector (Fixed flag)
-chosen=$(printf "󰹑 Mirror\n󰍺 Extend\n󰑓 Reset" | rofi -dmenu -nowm -i -p "󰍹 Display:" \
-    -theme-str "listview { lines: 3; } window { width: 20%; }")
+LAPTOP="eDP-1"
+HDMI="HDMI-1"
 
+# Check if wlr-randr is available
+if ! command -v wlr-randr &>/dev/null; then
+    echo "wlr-randr not found. Install it for HDMI management." >&2
+    exit 1
+fi
+
+chosen=$(printf "󰹑 Mirror\n󰍺 Extend\n󰑓 Reset" | \
+    fuzzel --config ~/.config/fuzzel/display.ini \
+           --dmenu \
+           --prompt="󰍹 Display: ")
+
+# Exit if cancelled
+[ -z "$chosen" ] && exit 0
 
 case "$chosen" in
-    󰹑 Mirror)  bash ~/.config/bspwm/scripts/mirror.sh ;;
-    󰍺 Extend)  bash ~/.config/bspwm/scripts/extend.sh ;;
-    󰑓 Reset)
-        # Re-enable laptop screen FIRST to prevent X11 crash/TTY dump
-        xrandr --output eDP-1 --auto --primary
-        sleep 1
-        xrandr --output HDMI-1 --off
+    *"Mirror"*)
+        # Enable both outputs at same position for mirroring
+        wlr-randr --output "$LAPTOP" --on --pos 0,0 --mode 1366x768
+        wlr-randr --output "$HDMI" --on --pos 0,0 --mode 1366x768
         ;;
-    *) exit 0 ;;
+        
+    *"Extend"*)
+        # Enable laptop on left, HDMI on right
+        wlr-randr --output "$LAPTOP" --on --pos 0,0 --mode 1366x768
+        wlr-randr --output "$HDMI" --on --pos 1366,0 --mode 1920x1080
+        ;;
+        
+    *"Reset"*)
+        # Enable laptop only, disable HDMI
+        wlr-randr --output "$LAPTOP" --on --pos 0,0 --mode 1366x768
+        sleep 0.3
+        wlr-randr --output "$HDMI" --off
+        ;;
 esac
-
-# Restart UI elements once hardware is stable
-killall -q polybar
-while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
-polybar main &

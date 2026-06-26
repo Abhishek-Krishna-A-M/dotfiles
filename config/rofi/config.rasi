@@ -1,15 +1,19 @@
 configuration {
     /* Performance Constraints */
     modi: "drun,run";
-    font: "FiraCode Nerd Font 10";
-    show-icons: true;
-    terminal: "urxvtc";
+    
+    font: "FiraCode Nerd Font 10"; 
+    show-icons: false;
+    terminal: "foot"; 
+    
+    drun-use-desktop-cache: true;
+    drun-reload-desktop-cache: false;
     
     /* Blazing Fast Matching Flags */
     case-sensitive: false;
-    matching: "glob";
-    tokenize: false;
-    drun-match-fields: "name,exec";
+    matching: "regex";  /* Faster string-stream handling on older CPUs */
+    tokenize: true;    
+    drun-match-fields: "name"; /* Stripped down to name only to skip exec paths parsing */
     drun-display-format: "{name}";
 
     /* Vim-style Navigation Keybinds */
@@ -17,6 +21,7 @@ configuration {
     kb-row-down: "Down,Control+n";
     kb-accept-entry: "Return,KP_Enter";
     kb-cancel: "Escape,Control+g";
+    
     /* Window Switcher Settings */
     window-match-fields: "title,class";
     window-format: "{w} · {c} · {t}";
@@ -25,10 +30,11 @@ configuration {
 @theme "/dev/null"
 
 * {
-    bg:      #000409E6;   /* Deep Slate Blue/Gray from the valley fog */
-    fg:      #ffffff;   /* Soft, muted ice-blue for unselected text */
-    sel-bg:  #ffffff;   /* Solid Artix Logo White for active selection */
-    sel-fg:  #000409;   /* Ultra dark blue-black text when selected */
+    /* #000409 at 80% opacity (0.8) */
+    bg:      rgba(0, 4, 9, 0.9);   
+    fg:      #ffffff;   
+    sel-bg:  #ffffff;   
+    sel-fg:  #000409;   
     
     background-color: transparent;
     text-color:       @fg;
@@ -38,9 +44,9 @@ window {
     anchor:           center;
     location:         center;
     width:            32%; 
-    background-color: @bg;
     
-    /* Crisp border inspired by the clean geometry of the Artix logo */
+    background-color: @bg; 
+    
     border:           2px;
     border-color:     #ffffff; 
     padding:          12px;
@@ -53,13 +59,13 @@ mainbox {
 inputbar {
     spacing:    0px;
     text-color: @fg;
-    padding:    4px 4px 12px 4px; /* Generous bottom padding to separate input */
+    padding:    4px 4px 12px 4px; 
     children:   [ prompt, entry ];
 }
 
 prompt {
     padding:    0px 8px 0px 0px;
-    text-color: #ffffff; /* Make the prompt match the crisp white logo */
+    text-color: #ffffff; 
     font:       "FiraCode Nerd Font Bold 10";
 }
 
@@ -69,7 +75,7 @@ entry {
 }
 
 listview {
-    lines:        5; /* Strictly constrained to 10 lines */
+    lines:        5; 
     columns:      1;
     fixed-height: true;
     scrollbar:    false;
@@ -78,7 +84,7 @@ listview {
 
 element {
     padding: 6px;
-    border-radius: 0px; /* Sharp corners to match bspwm/suckless style */
+    border-radius: 3px; 
 }
 
 element selected {

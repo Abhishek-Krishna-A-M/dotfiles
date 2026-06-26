@@ -1,8 +1,3 @@
-### ════════════════════════════════════════════════════════════════════════════
-### ~/.config/sway/config
-### Converted from bspwm + sxhkd  |  Optimised for i3-5th-gen / 4 GB RAM
-### Tools: waybar · rofi · foot · grim · slurp · swaybg · swaylock · dunst
-### ════════════════════════════════════════════════════════════════════════════
 
 ### ── VARIABLES ───────────────────────────────────────────────────────────────
 set $mod   Mod4
@@ -13,7 +8,7 @@ set $ws2 "2:「 2 」"
 set $ws3 "3:「 3 」"
 set $ws4 "4:「 4 」"
 set $ws5 "5:「 5 」"
-set $lock  swaylock
+set $lock pgrep -x swaylock || swaylock
 
 ### ── WAYLAND / XDG ENVIRONMENT ─────────────────────────────────────────────
 exec dbus-update-activation-environment \
@@ -32,18 +27,10 @@ exec /usr/lib/xdg-desktop-portal -r
 
 # Foot server — footclient spawns in ~5 ms against this instead of ~60 ms cold
 exec foot --server
-
 # Notification daemon
 exec mako
 # Network manager tray icon
 exec nm-applet --indicator
-
-# Idle: lock at 5 min, blank screen at 10 min, lock before sleep
-exec swayidle -w \
-    timeout 300  "$lock" \
-    timeout 600  'swaymsg "output * dpms off"' \
-    resume       'swaymsg "output * dpms on"'  \
-    before-sleep "$lock"
 
 ### ── OUTPUT (wallpaper) ──────────────────────────────────────────────────────
 # Sway's native output command handles wallpaper — no swaybg needed here.
@@ -58,7 +45,7 @@ input "type:keyboard" {
     repeat_delay 300
     repeat_rate  50
     # Optional: remap Caps Lock to Escape (handy for Neovim)
-    # xkb_options caps:escape
+    xkb_options caps:escape
 }
 
 # Touchpad
@@ -98,7 +85,6 @@ default_floating_border pixel 2
 # Hide border on the side touching the screen edge (bspwm: borderless when 1 window)
 hide_edge_borders smart
 
-# Gaps — bspwm: window_gap 6 / top_padding handled automatically by waybar's exclusive zone
 gaps inner 6
 gaps outer 0
 
@@ -114,8 +100,6 @@ client.unfocused        #000409 #000409 #555555 #000409    #000409
 client.urgent           #cc0000 #cc0000 #ffffff #cc0000    #cc0000
 
 ### ── STATUS BAR ─────────────────────────────────────────────────────────────
-# Using the bar subcommand so waybar restarts automatically on `swaymsg reload`.
-# Place your waybar config at ~/.config/waybar/config.jsonc
 bar {
     position top
     swaybar_command swaybar
@@ -163,16 +147,21 @@ bindsym $mod+Return         exec $term
 bindsym $mod+$alt+Return    exec $term
 
 ## ── Launchers ─────────────────────────────────────────────────────────────
-# bspwm: super+r → rofi -show drun
-bindsym $mod+r          exec rofi -nowm -show drun -display-drun "󰀻 Apps:"
+# Apps
+bindsym $mod+r exec fuzzel --no-icons --prompt="󰀻 Apps: "
 
-# bspwm: super+shift+r → rofi -show run
-bindsym $mod+Shift+r    exec rofi -nowm -show run -display-run " Run:"
+# Run
+bindsym $mod+Shift+r exec "compgen -c | sort -u | fuzzel --no-icons  --dmenu --prompt=' Run: ' | xargs -r swaymsg exec --"
 
-## ── File finder (fd + fuzzel + nvim inside foot) ─────────────────────────
-bindsym $mod+$alt+f exec file=$(cd ~ && fd --type f --hidden --follow --exclude .git --exclude .cache --exclude .local/share/ --exclude node_modules | rofi -dmenu -nowm -i -p "󰈞 Find File:") && \
-    [ -n "$file" ] && \
-    foot -e env FILE="$HOME/$file" sh -c 'cd "$(dirname "$(realpath "$FILE")")" && nvim "$(realpath "$FILE")" && exec $SHELL'
+bindsym $mod+$alt+f exec sh -c 'file=$(cd ~ && fd --type f --hidden --follow \
+    --exclude .git \
+    --exclude .cache \
+    --exclude .local/share \
+    --exclude node_modules | \
+    fuzzel --no-icons --dmenu --prompt="󰈞 Find File: "); \
+    [ -n "$file" ] || exit 0; \
+    file="$HOME/$file"; \
+    foot -e sh -c "cd \"$(dirname "$(realpath "$file")")\" && nvim \"$(realpath "$file")\" && exec \$SHELL"'
 
 ## ── File Manager ──────────────────────────────────────────────────────────
 # bspwm: super+shift+f → urxvtc -e lf
@@ -296,7 +285,7 @@ bindsym --locked XF86MonBrightnessDown exec brightnessctl set 10%-
 
 ## extras
 # Fast window switcher
-bindsym $mod+space exec rofi -nowm -show window -display-window "󱂬 Switch:" -theme-str 'window { width: 40%; } listview { lines: 8; }'
+bindsym $mod+space exec ~/.config/custom_scripts/window_switcher.sh
 
 ### ── WINDOW RULES ───────────────────────────────────────────────────────────
 
