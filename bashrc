@@ -1,7 +1,7 @@
 # 1. Instant non-interactive exit
 [ "${-#*i}" = "$-" ] && return
 
-# 2. Fast Git Logic (HDD & Subfolder Optimized)
+# 2. Fast Git Logic (HDD & Subfolder Optimized).
 git_prompt_info() {
   local dir="$PWD"
   while [ "$dir" != "/" ]; do
