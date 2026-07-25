@@ -1,8 +1,0 @@
-[screencast]
-max_fps=60
-chooser_type=dmenu
-chooser_cmd=fuzzel --config ~/.config/fuzzel/window.ini --dmenu --prompt="󱂬 Share Target: "
-
-[screenshot]
-chooser_type=simple
-chooser_cmd=slurp -f %o -or
