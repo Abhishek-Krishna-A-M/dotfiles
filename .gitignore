@@ -1,0 +1,7 @@
+# Secret tokens & sensitive configs
+config/gh/hosts.yml
+config/dconf/user
+
+# Temporary runtime files
+*.tmp.*
+*.log

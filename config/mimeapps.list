@@ -1,1 +1,26 @@
-/home/ak/.config/mimeapps.list
+[Default Applications]
+x-scheme-handler/http=brave-origin.desktop
+x-scheme-handler/https=brave-origin.desktop
+x-scheme-handler/chrome=userapp-Waterfox-OFQCO3.desktop
+text/html=brave-origin.desktop
+application/x-extension-htm=userapp-Waterfox-OFQCO3.desktop
+application/x-extension-html=userapp-Waterfox-OFQCO3.desktop
+application/x-extension-shtml=userapp-Waterfox-OFQCO3.desktop
+application/xhtml+xml=userapp-Waterfox-OFQCO3.desktop
+application/x-extension-xhtml=userapp-Waterfox-OFQCO3.desktop
+application/x-extension-xht=userapp-Waterfox-OFQCO3.desktop
+x-scheme-handler/postman=Postman.desktop
+x-scheme-handler/about=brave-origin.desktop
+x-scheme-handler/unknown=brave-origin.desktop
+
+[Added Associations]
+x-scheme-handler/http=userapp-Waterfox-OFQCO3.desktop;
+x-scheme-handler/https=userapp-Waterfox-OFQCO3.desktop;
+x-scheme-handler/chrome=userapp-Waterfox-OFQCO3.desktop;
+text/html=userapp-Waterfox-OFQCO3.desktop;
+application/x-extension-htm=userapp-Waterfox-OFQCO3.desktop;
+application/x-extension-html=userapp-Waterfox-OFQCO3.desktop;
+application/x-extension-shtml=userapp-Waterfox-OFQCO3.desktop;
+application/xhtml+xml=userapp-Waterfox-OFQCO3.desktop;
+application/x-extension-xhtml=userapp-Waterfox-OFQCO3.desktop;
+application/x-extension-xht=userapp-Waterfox-OFQCO3.desktop;
