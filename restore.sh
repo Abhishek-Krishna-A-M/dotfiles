@@ -1,6 +1,3 @@
-git clone git@github.com:Abhishek-Krishna-A-M/dotfiles.git ~/dotfiles
-
-# 2. Re-create the symlinks pointing ~/.config back to ~/dotfiles
 CONFIGS=(
   alacritty astro bspwm btop cava custom_scripts dconf dunst fish 
   flameshot foot fuzzel gh gtk-3.0 gtk-4.0 helix htop lazygit lf 
