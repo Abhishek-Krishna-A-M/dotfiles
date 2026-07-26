@@ -1,7 +1,7 @@
 # 1. Instant non-interactive exit
 [ "${-#*i}" = "$-" ] && return
 
-# 2. Fast Git Logic (HDD & Subfolder Optimized).
+# 2. Fast Git Logic (HDD & Subfolder Optimized)
 git_prompt_info() {
   local dir="$PWD"
   while [ "$dir" != "/" ]; do
@@ -68,8 +68,9 @@ export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export EDITOR="nvim"
-export TERMINAL=urxvtc
+export TERMINAL=foot
 export PATH="/home/ak/.bun/bin:$PATH"
+export PATH="$PATH:/home/ak/development/flutter/bin"
 
 # Add paths only if they exist
 for d in "$ANDROID_HOME/cmdline-tools/latest/bin" "$ANDROID_HOME/platform-tools" "$PNPM_HOME"; do
@@ -80,6 +81,5 @@ done
 unset d
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-}"
 
-if [ "$TERM" = "rxvt-unicode-256color" ] || [ "$TERM" = "rxvt-unicode" ]; then
-    clear
-fi
+# Created by `pipx` on 2026-06-26 19:14:17
+export PATH="$PATH:/home/ak/.local/bin"

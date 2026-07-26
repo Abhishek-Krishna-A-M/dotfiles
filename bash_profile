@@ -12,3 +12,6 @@ export LIBVA_DRIVER_NAME=i965
 export VDPAU_DRIVER=va_gl
 export GTK_USE_PORTAL=0
 export GTK_A11Y=none
+
+# Created by `pipx` on 2026-06-26 19:14:17
+export PATH="$PATH:/home/ak/.local/bin"
