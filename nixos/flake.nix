@@ -1,10 +1,10 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    thorium.url = "github:Rishabh5321/thorium_flake";
+    uwm.url = "path:/home/ak/projects/uwm";
   };
 
-  outputs = { self, nixpkgs, thorium }:
+  outputs = { self, nixpkgs, uwm,...}:
   let
     system = "x86_64-linux";
   in {
@@ -13,10 +13,10 @@
 
       modules = [
         ./configuration.nix
+	uwm.nixosModules.default
 
         {
           environment.systemPackages = [
-            thorium.packages.${system}.thorium-avx2
           ];
         }
       ];
