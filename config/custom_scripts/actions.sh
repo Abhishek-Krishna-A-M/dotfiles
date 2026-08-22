@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 1. Define your Aliases [cite: 1]
+# 1. Define Aliases
 declare -A FAVS=(
     ["yt"]="youtube.com"
     ["gh"]="github.com"
@@ -12,10 +12,9 @@ declare -A FAVS=(
     ["ym"]="music.youtube.com"
     ["google"]="www.google.com"
     ["duck"]="duckduckgo.com"
-    
 )
 
-# 2. STAGE 1: Provide the list for dmenu [cite: 1]
+# 2. STAGE 1: Provide list for dmenu
 if [ -z "$1" ]; then
     echo ":d <query> ➜ DuckDuckGo"
     for alias in "${!FAVS[@]}"; do
@@ -26,10 +25,10 @@ fi
 
 INPUT="$1"
 
-# Strip the " ➜ ..." suffix from dmenu selection [cite: 1]
+# Strip " ➜ ..." suffix
 CLEAN_INPUT=$(echo "$INPUT" | awk '{print $1}')
 
-# 3. ROUTING LOGIC [cite: 1]
+# 3. ROUTING LOGIC
 if [[ -n "${FAVS[$CLEAN_INPUT]}" ]]; then
     TARGET="https://${FAVS[$CLEAN_INPUT]}"
 elif [[ "$INPUT" =~ ^([0-9]+)$ ]]; then
@@ -50,8 +49,21 @@ else
 fi
 
 # 4. EXECUTION
-# Using setsid and & to fully detach from the dmenu process
-(setsid ubrowser "$TARGET" &) > /dev/null 2>&1
-exit 0
+# wlrctl 'find' exits with 0 (success) if a window matches the criteria.
+# We check if there is an 'active' (focused) window matching the specific app_id.
+
+if wlrctl window find state:active app_id:brave-origin 2>/dev/null; then
+    # Brave Origin is currently active
+    (setsid brave-origin "$TARGET" &) > /dev/null 2>&1
+
+elif wlrctl window find state:active app_id:librewolf 2>/dev/null; then
+    # Librewolf is currently active
+    (setsid librewolf -new-tab "$TARGET" &) > /dev/null 2>&1
+
+else
+    # Fallback: if dmenu/rofi/terminal is focused instead, 
+    # or the app_id doesn't match perfectly.
+    (setsid brave-origin "$TARGET" &) > /dev/null 2>&1
+fi
 
 exit 0
