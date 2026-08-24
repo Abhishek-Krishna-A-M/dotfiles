@@ -1,0 +1,12 @@
+#!/bin/sh
+exec 2>&1
+
+# Hardcode or dynamically detect the runtime dir if the environment lacks it
+export XDG_RUNTIME_DIR="/run/user/1000"
+
+# Wait for the system seat/session manager to provision the directory
+while [ ! -d "$XDG_RUNTIME_DIR" ]; do
+    sleep 0.2
+done
+
+exec pipewire

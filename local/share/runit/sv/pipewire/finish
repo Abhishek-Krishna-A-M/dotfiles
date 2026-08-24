@@ -1,0 +1,12 @@
+#!/bin/sh
+# runit passes the exit code of the main process as the first argument ($1)
+# and the exit status (like a signal number) as the second argument ($2).
+
+# If the window manager is dead, both environment variables will be missing/blank
+if [ -z "$WAYLAND_DISPLAY" ] && [ -z "$DISPLAY" ]; then
+    echo "Graphical session ended. Stopping pipewire service tracking."
+    
+    # Write 'd' (down) to runit's control pipe for this service.
+    # This tells the supervisor: "Do not restart this service again."
+    printf 'd' > ./supervise/control
+fi
