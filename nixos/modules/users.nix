@@ -1,5 +1,6 @@
 {
   security.sudo.wheelNeedsPassword = true;
+  security.polkit.enable = true;
 
   users.users.ak = {
     isNormalUser = true;

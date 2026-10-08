@@ -1,6 +1,12 @@
 {
   networking.hostName = "nixos";
-  networking.networkmanager.enable = true;
+  networking.networkmanager.enable=false;
+  networking.wireless.iwd.enable=true;
+  networking.wireless.iwd.settings = {
+      Settings={
+	   AutoConnect=true;
+	};
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

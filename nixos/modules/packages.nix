@@ -3,12 +3,24 @@
 {
   environment.systemPackages = with pkgs; [
     vim
+    tree
+    ripgrep
+    fzf
+    yazi
+    github-cli
     neovim
     git
     wget
     fastfetch
     curl
     htop
-    librewolf
+    brave-origin
+    foot
+    swaybg
+    opencode
+    grim
+    slurp
+    brightnessctl
+    wl-clipboard
   ];
 }

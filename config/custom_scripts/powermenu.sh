@@ -17,14 +17,14 @@ case "$chosen" in
         swaymsg exit
         ;;
     " Reboot")
-        loginctl reboot
+        systemctl reboot
         ;;
     "󰐥 Power Off")
-        loginctl poweroff
+        systemctl poweroff
         ;;
     "󰒲 Sleep")
         swaylock &
         sleep 0.5
-        loginctl suspend
+        systemctl suspend
         ;;
 esac
