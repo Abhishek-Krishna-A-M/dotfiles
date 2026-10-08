@@ -1,0 +1,5 @@
+#!/bin/sh
+if [ -z "$WAYLAND_DISPLAY" ] && [ -z "$DISPLAY" ]; then
+    echo "Graphical session ended. Stopping pipewire-pulse service tracking."
+    printf 'd' > ./supervise/control
+fi

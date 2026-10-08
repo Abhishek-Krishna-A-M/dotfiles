@@ -1,0 +1,11 @@
+#!/bin/sh
+exec 2>&1
+
+export XDG_RUNTIME_DIR="/run/user/1000"
+
+# Wait until PipeWire main daemon is up and has created the socket
+while [ ! -S "$XDG_RUNTIME_DIR/pipewire-0" ]; do
+    sleep 0.2
+done
+
+exec pipewire-pulse

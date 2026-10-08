@@ -68,7 +68,7 @@ export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export EDITOR="nvim"
-export TERMINAL=foot
+export TERMINAL=urxvtc
 export PATH="/home/ak/.bun/bin:$PATH"
 export PATH="$PATH:/home/ak/development/flutter/bin"
 
@@ -81,5 +81,14 @@ done
 unset d
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-}"
 
+if [ "$TERM" = "rxvt-unicode-256color" ] || [ "$TERM" = "rxvt-unicode" ]; then
+    clear
+fi
+
 # Created by `pipx` on 2026-06-26 19:14:17
 export PATH="$PATH:/home/ak/.local/bin"
+
+update_cwd_osc7() {
+    printf "\e]7;file://%s%s\e\\" "$HOSTNAME" "$PWD"
+}
+PROMPT_COMMAND="update_cwd_osc7; $PROMPT_COMMAND"
