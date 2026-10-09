@@ -1,0 +1,59 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1791456040,
+        "narHash": "sha256-H83yz/do+hjOO0uujHyH8RgtIQP2v7Mw+cLwcZK/xKc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e7439b6b14ad3cc35d05608ebca9bce01a25f5f8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1785715447,
+        "narHash": "sha256-4K0IGmbAOJnd/Hx2+CNEvx3ECrtYnsoaf4grI6gvZ/Q=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "243895692ae2a2fbd08a05141462c0cc0d3ca10f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "uwm": "uwm"
+      }
+    },
+    "uwm": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1791471401,
+        "narHash": "sha256-zxqdcDoJsSH7JOuVTVsCZTenbQCQyU4PUkF2uFloBoA=",
+        "path": "/home/ak/projects/uwm",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/ak/projects/uwm",
+        "type": "path"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
